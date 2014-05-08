@@ -1,0 +1,39 @@
+{
+  "name": "logfire",
+  "version": "0.0.1",
+  "description": "Event logging and statistics server",
+  "main": "lib/logfire.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha"
+  },
+  "bin": {
+    "logfire": "./bin/logfire.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/logfirejs/logfire.git"
+  },
+  "keywords": [
+    "logging",
+    "events",
+    "redis",
+    "messages"
+  ],
+  "author": "Sascha Gehlich <sascha@gehlich.us>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/logfirejs/logfire/issues"
+  },
+  "homepage": "https://github.com/logfirejs/logfire",
+  "devDependencies": {
+    "mocha": "~1.18.2",
+    "supertest": "~0.12.0"
+  },
+  "dependencies": {
+    "redis": "~0.10.1",
+    "hiredis": "~0.1.16",
+    "express": "~4.1.1",
+    "js-yaml": "~3.0.2",
+    "winston": "~0.7.3"
+  }
+}
