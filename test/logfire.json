@@ -22,7 +22,8 @@
               "type": "string"
             }, {
               "name": "created_at",
-              "type": "timestamp"
+              "type": "timestamp",
+              "required": true
             }
           ]
         },
