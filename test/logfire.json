@@ -10,7 +10,7 @@
     "video": {
       "events": {
         "success": {
-          "data": {
+          "fields": {
             "provider": {
               "type": "string"
             },
@@ -24,7 +24,7 @@
           }
         },
         "error": {
-          "data": {
+          "fields": {
             "code": {
               "type": "string"
             },
@@ -47,7 +47,7 @@
     "cache": {
       "events": {
         "hit": {
-          "data": {
+          "fields": {
             "created_at": {
               "type": "timestamp",
               "required": true
@@ -55,9 +55,10 @@
           }
         },
         "miss": {
-          "data": {
+          "fields": {
             "created_at": {
-              "type": "timestamp"
+              "type": "timestamp",
+              "required": true
             }
           }
         }

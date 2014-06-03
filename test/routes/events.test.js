@@ -104,7 +104,7 @@ describe('POST /events', function () {
           }
         })
         .expect(JSON.stringify({
-          error: 'Field "created_at" for event "video.success" is missing.'
+          error: 'Field "created_at" is missing.'
         }))
         .expect(400, done);
     });
