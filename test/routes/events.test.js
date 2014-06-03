@@ -110,6 +110,26 @@ describe('POST /events', function () {
     });
   });
 
+  describe('when doing a of wrong type', function () {
+    it('should return success', function (done) {
+      supertest(server)
+        .post('/events')
+        .send({
+          category: 'video',
+          event: 'success',
+          data: {
+            provider: 'youtube',
+            video_identifier: 'abcdefghijk',
+            created_at: 'foobar'
+          }
+        })
+        .expect(JSON.stringify({
+          error: 'Field "created_at" is of type string, but expected it to be timestamp.'
+        }))
+        .expect(400, done);
+    });
+  });
+
   describe('when doing a valid request', function () {
     it('should return success', function (done) {
       supertest(server)
