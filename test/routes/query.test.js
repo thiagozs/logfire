@@ -21,9 +21,10 @@ describe('GET /query', function () {
     return logfire.store.reset();
   });
 
-  var eventsTotal = 0;
-  var successEvents = 0;
-  var errorEvents = 0;
+  var minutes = 60 * 3;
+  var successPerMinute = 3;
+  var errorPerMinute = 3;
+  var date = Math.round(Date.now() / 1000);
 
   // Seeding
   before(function () {
@@ -31,34 +32,30 @@ describe('GET /query', function () {
 
     var tasks = [];
     var event, i;
-    for (var minute = 0; minute < 60 * 3; minute++) {
-      for (i = 0; i < 3; i++) {
+    for (var minute = 0; minute < minutes; minute++) {
+      for (i = 0; i < successPerMinute; i++) {
         event = {
           category: 'video',
           event: 'success',
           data: {
             provider: ['youtube', 'vimeo', 'dailymotion'][Math.floor(Math.random() * 3)],
             video_identifier: 'random',
-            created_at: Date.now() - minute * 60 * 1000
+            created_at: date - minute * 60
           }
         };
         tasks.push(Q.invoke(logfire.store.events, 'create', event));
-        eventsTotal++;
-        successEvents++;
       }
 
-      for (i = 0; i < 5; i++) {
+      for (i = 0; i < errorPerMinute; i++) {
         event = {
           category: 'video',
           event: 'error',
           data: {
             code: ['video_not_found', 'inappropriate_content'][Math.floor(Math.random() * 2)],
-            created_at: Date.now() - minute * 60 * 1000
+            created_at: date - minute * 60
           }
         };
         tasks.push(Q.invoke(logfire.store.events, 'create', event));
-        eventsTotal++;
-        errorEvents++;
       }
     }
     Log.i('tests', 'Seeding...');
@@ -87,7 +84,7 @@ describe('GET /query', function () {
           .expect(200)
           .then(function (res) {
             var parsed = JSON.parse(res.body);
-            parsed.length.should.equal(successEvents);
+            parsed.length.should.equal(minutes * successPerMinute);
           });
       });
 
@@ -112,25 +109,47 @@ describe('GET /query', function () {
           .expect(200)
           .then(function (res) {
             var parsed = JSON.parse(res.body);
-            parsed.length.should.equal(eventsTotal);
+            parsed.length.should.equal(minutes * (successPerMinute + errorPerMinute));
           });
       });
 
       describe('if one of the events does not exist', function() {
         it('should return an error', function() {
           return supertest(logfire.server.server)
-          .get('/query?events=video.success,foo.bar')
-          .expect('Content-Type', /json/)
-          .expect(JSON.stringify({
-            error: 'The event "foo.bar" does not exist.'
-          }))
-          .expect(400);
+            .get('/query?events=video.success,foo.bar')
+            .expect('Content-Type', /json/)
+            .expect(JSON.stringify({
+              error: 'The event "foo.bar" does not exist.'
+            }))
+            .expect(400);
         });
       });
     });
   });
 
-  describe('with `start` and/or `end` given', function() {
-    it('should only return events in the given range');
+  describe('with `start` given', function() {
+    it('should only return events created after `start`', function() {
+      return supertest(logfire.server.server)
+        .get('/query?events=video.success&start=' + (date - 60 * 59))
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .then(function (res) {
+          var parsed = JSON.parse(res.body);
+          parsed.length.should.equal(60 * (successPerMinute));
+        });
+    });
+  });
+
+  describe('with `start` and `end` given', function() {
+    it('should only return events created in this timespan', function() {
+      return supertest(logfire.server.server)
+        .get('/query?events=video.success&start=' + (date - 60 * 59) + '&end=' + (date - 30 * 60))
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .then(function (res) {
+          var parsed = JSON.parse(res.body);
+          parsed.length.should.equal(30 * (successPerMinute));
+        });
+    });
   });
 });
