@@ -67,7 +67,7 @@ describe('POST /events', function () {
         .post('/events')
         .send({ category: 'video', event: 'foobar' })
         .expect(JSON.stringify({
-          error: 'Event "foobar" does not exist.'
+          error: 'Event "video.foobar" does not exist.'
         }))
         .expect(400, done);
     });
@@ -111,7 +111,7 @@ describe('POST /events', function () {
   });
 
   describe('when doing a valid request', function () {
-    it('should return an error', function (done) {
+    it('should return success', function (done) {
       supertest(server)
         .post('/events')
         .send({

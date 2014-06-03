@@ -6,76 +6,62 @@
     "auth": ""
   },
 
-  "categories": [
-    {
-      "name": "video",
-
-      "events": [
-        {
-          "name": "success",
-          "data": [
-            {
-              "name": "provider",
+  "categories": {
+    "video": {
+      "events": {
+        "success": {
+          "data": {
+            "provider": {
               "type": "string"
-            }, {
-              "name": "video_identifier",
+            },
+            "video_identifier": {
               "type": "string"
-            }, {
-              "name": "created_at",
+            },
+            "created_at": {
               "type": "timestamp",
               "required": true
             }
-          ]
+          }
         },
-
-        {
-          "name": "error",
-          "data": [
-            {
-              "name": "code",
+        "error": {
+          "data": {
+            "code": {
               "type": "string"
-            }, {
-              "name": "stack",
+            },
+            "stack": {
               "type": "string"
-            }, {
-              "name": "settings",
+            },
+            "settings": {
+              "type": "settings"
+            },
+            "info": {
               "type": "string"
-            }, {
-              "name": "info",
-              "type": "string"
-            }, {
-              "name": "created_at",
+            },
+            "created_at": {
               "type": "timestamp"
             }
-          ]
+          }
         }
-      ]
-
-    }, {
-      "name": "cache",
-
-      "events": [
-        {
-          "name": "hit",
-          "data": [
-            {
-              "name": "created_at",
+      }
+    },
+    "cache": {
+      "events": {
+        "hit": {
+          "data": {
+            "created_at": {
+              "type": "timestamp",
+              "required": true
+            }
+          }
+        },
+        "miss": {
+          "data": {
+            "created_at": {
               "type": "timestamp"
             }
-          ]
-        },
-
-        {
-          "name": "miss",
-          "data": [
-            {
-            "name": "created_at",
-            "type": "timestamp"
-            }
-          ]
+          }
         }
-      ]
-
+      }
     }
-  ]
+  }
 }
