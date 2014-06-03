@@ -18,6 +18,6 @@
     /* autoload.js globals */
     "Log" : false,
     "Q" : false,
-    "HTTPError" : false
+    "FirelogError" : false
   }
 }

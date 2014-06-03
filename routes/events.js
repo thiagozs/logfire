@@ -9,6 +9,8 @@ module.exports = {
    */
   create: function (req, res) {
     var body = req.body;
-    if (!body.category) throw new HTTPError('`category` is missing.', 400);
+
+    if (!body.category) throw new FirelogError('`category` is missing.', 400);
+    if (!body.event) throw new FirelogError('`event` is missing.', 400);
   }
 };

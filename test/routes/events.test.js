@@ -25,7 +25,7 @@ describe('POST /events', function () {
    * Validations
    */
 
-  describe.only('when category is missing', function () {
+  describe('when category is missing', function () {
     it('should return an error', function (done) {
       supertest(server)
         .post('/events')
@@ -43,7 +43,7 @@ describe('POST /events', function () {
         .post('/events')
         .send({ category: 'video' })
         .expect(JSON.stringify({
-          error: '`category` is missing.'
+          error: '`event` is missing.'
         }))
         .expect(400, done);
     });
