@@ -1,0 +1,80 @@
+{
+  "redis": {
+    "host": "localhost",
+    "port": 6379,
+    "db": 3,
+    "auth": ""
+  },
+
+  "categories": [
+    {
+      "name": "video",
+
+      "events": [
+        {
+          "name": "success",
+          "data": [
+            {
+              "name": "provider",
+              "type": "string"
+            }, {
+              "name": "video_identifier",
+              "type": "string"
+            }, {
+              "name": "created_at",
+              "type": "timestamp"
+            }
+          ]
+        },
+
+        {
+          "name": "error",
+          "data": [
+            {
+              "name": "code",
+              "type": "string"
+            }, {
+              "name": "stack",
+              "type": "string"
+            }, {
+              "name": "settings",
+              "type": "string"
+            }, {
+              "name": "info",
+              "type": "string"
+            }, {
+              "name": "created_at",
+              "type": "timestamp"
+            }
+          ]
+        }
+      ]
+
+    }, {
+      "name": "cache",
+
+      "events": [
+        {
+          "name": "hit",
+          "data": [
+            {
+              "name": "created_at",
+              "type": "timestamp"
+            }
+          ]
+        },
+
+        {
+          "name": "miss",
+          "data": [
+            {
+            "name": "created_at",
+            "type": "timestamp"
+            }
+          ]
+        }
+      ]
+
+    }
+  ]
+}
