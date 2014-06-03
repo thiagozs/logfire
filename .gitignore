@@ -21,3 +21,4 @@ node_modules
 
 # Oh you, OSX...
 .DS_Store
+dump.rdb

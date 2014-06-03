@@ -1,7 +1,8 @@
 'use strict';
 
-var supertest = require('supertest');
+var supertest = require('supertest-as-promised');
 var helpers = require('../test-helpers');
+var should = require('should');
 
 describe('POST /events', function () {
   var logfire = null;
@@ -147,6 +148,50 @@ describe('POST /events', function () {
           success: true
         }))
         .expect(200, done);
+    });
+
+    it('should create an event', function () {
+      return supertest(server)
+        .post('/events')
+        .send({
+          category: 'video',
+          event: 'success',
+          data: {
+            provider: 'youtube',
+            video_identifier: 'abcdefghijk',
+            created_at: Date.now()
+          }
+        })
+        .expect(200)
+        .then(function () {
+          var redis = logfire.store.redis;
+          return Q.ninvoke(redis, 'hgetall', 'logfire:events:1');
+        })
+        .then(function (result) {
+          should.exist(result);
+        });
+    });
+
+    it('should add numeric values to index', function () {
+      return supertest(server)
+        .post('/events')
+        .send({
+          category: 'video',
+          event: 'success',
+          data: {
+            provider: 'youtube',
+            video_identifier: 'abcdefghijk',
+            created_at: Date.now()
+          }
+        })
+        .expect(200)
+        .then(function () {
+          var redis = logfire.store.redis;
+          return Q.ninvoke(redis, 'zrangebyscore', 'logfire:indexes:video.success:created_at', '-inf', '+inf', 'withscores');
+        })
+        .then(function (result) {
+          result.length.should.equal(2);
+        });
     });
   });
 });
