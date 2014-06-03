@@ -7,7 +7,6 @@ describe('GET /', function () {
   var logfire = null;
   var server = null;
   before(function () {
-    Log.setLevel('warn');
     return helpers.initLogfire()
       .then(function (l) {
         logfire = l;

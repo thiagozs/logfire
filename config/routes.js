@@ -10,4 +10,9 @@ module.exports = function (map) {
    * Routes for `routes/events.js`
    */
   map.post('/events', 'events#create');
+
+  /**
+   * Routes for `routes/query.js`
+   */
+  map.get('/query', 'query#query');
 };
