@@ -25,7 +25,7 @@ describe('POST /events', function () {
    * Validations
    */
 
-  describe('when category is missing', function () {
+  describe.only('when category is missing', function () {
     it('should return an error', function (done) {
       supertest(server)
         .post('/events')

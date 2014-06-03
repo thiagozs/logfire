@@ -8,6 +8,7 @@ module.exports = {
    * @param  {ServerResponse} res
    */
   create: function (req, res) {
-    console.log(req.body);
+    var body = req.body;
+    if (!body.category) throw new HTTPError('`category` is missing.', 400);
   }
 };

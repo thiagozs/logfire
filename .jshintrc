@@ -17,6 +17,7 @@
 
     /* autoload.js globals */
     "Log" : false,
-    "Q" : false
+    "Q" : false,
+    "HTTPError" : false
   }
 }
