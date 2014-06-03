@@ -1,5 +1,5 @@
 -- Finds all keys with the given prefix and deletes them
-local keys = redis.pcall('keys', args['prefix'] .. '*')
+local keys = redis.call('keys', args['prefix'] .. '*')
 for key in pairs(keys) do
-  redis.pcall('del', key)
+  redis.call('del', key)
 end
