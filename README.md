@@ -1,7 +1,6 @@
-logfire
-=======
-
-logfire is an event and message logging service built with node.js, redis and lua.
+<p align="center">
+  <img src="http://s7.directupload.net/images/140604/97siii9z.png" />
+</p>
 
 TODOs
 -----
