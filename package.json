@@ -5,7 +5,7 @@
   "main": "lib/logfire.js",
   "scripts": {
     "test": "NODE_ENV=test node_modules/.bin/mocha --require should --reporter spec test/**/*.test.js",
-    "coveralls": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | node_modules/.bin/coveralls && rm -rf ./coverage"
+    "coveralls": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha --report lcovonly -- -R spec test/**/*.test.js && cat ./coverage/lcov.info | node_modules/.bin/coveralls && rm -rf ./coverage"
   },
   "bin": {
     "logfire": "./bin/logfire.js"
