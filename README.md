@@ -8,6 +8,9 @@
   <a href="https://coveralls.io/r/logfirejs/logfire?branch=master">
     <img src="http://img.shields.io/coveralls/logfirejs/logfire/master.svg" alt="Coverage Status" />
   </a>
+  <a href="https://gemnasium.com/logfirejs/logfire">
+    <img src="http://img.shields.io/gemnasium/logfirejs/logfire.svg" alt="Dependency Status" />
+  </a>
 </p>
 
 TODOs
