@@ -223,7 +223,15 @@ describe('GET /query', function () {
       });
 
       describe('if one of the fields does not exist in all events', function() {
-        it('should return an error');
+        it('should return an error', function() {
+          return supertest(logfire.server.server)
+            .get('/query?events=video.success,video.error&select=created_at,video_identifier')
+            .expect('Content-Type', /json/)
+            .expect(JSON.stringify({
+              error: 'The field "video_identifier" does not exist in all of the requested events.'
+            }))
+            .expect(400);
+        });
       });
     });
   });
