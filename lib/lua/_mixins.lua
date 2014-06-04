@@ -18,3 +18,12 @@ local hgetall = function (key)
   end
   return result
 end
+
+-- Gets multiple specific fields from a hash as a dictionary
+local hmget = function (key, ...)
+  if next(arg) == nil then return {} end
+  local bulk = redis.call('HMGET', key, unpack(arg))
+  local result = {}
+  for i, v in ipairs(bulk) do result[ arg[i] ] = v end
+  return result
+end

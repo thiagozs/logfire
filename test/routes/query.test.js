@@ -162,7 +162,7 @@ describe('GET /query', function () {
           .expect(200)
           .then(function (res) {
             var parsed = JSON.parse(res.body);
-            parsed['video.success'].should.equal(minutes * (successPerMinute));
+            parsed[0].should.equal(minutes * (successPerMinute));
           });
       });
 
@@ -174,18 +174,44 @@ describe('GET /query', function () {
           .expect(200)
           .then(function (res) {
             var parsed = JSON.parse(res.body);
-            parsed['video.success'].should.equal(60 * (successPerMinute));
+            parsed[0].should.equal(60 * (successPerMinute));
           });
-        })
+        });
       });
     });
 
     describe('one specific field', function() {
-      it('should only return the specific field for each event');
+      it('should only return the specific field for each event', function() {
+        return supertest(logfire.server.server)
+          .get('/query?events=video.success&select=created_at')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .then(function (res) {
+            var parsed = JSON.parse(res.body);
+            Object.keys(parsed[0]).length.should.equal(1);
+            parsed[0].created_at.should.exist;
+          });
+      });
+
+      describe('if the field does not exist in all events', function() {
+        it('should return an error', function() {
+          return supertest(logfire.server.server)
+            .get('/query?events=video.success,video.error&select=video_identifier')
+            .expect('Content-Type', /json/)
+            .expect(JSON.stringify({
+              error: 'The field "video_identifier" does not exist in all of the requested events.'
+            }))
+            .expect(400);
+        });
+      });
     });
 
     describe('multiple fields', function() {
       it('should return the specific fields for each event');
+
+      describe('if one of the fields does not exist in all events', function() {
+        it('should return an error');
+      });
     });
   });
 });

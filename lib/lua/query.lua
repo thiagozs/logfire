@@ -1,9 +1,14 @@
 local prefix = args['prefix']
 
-local findEventsByIds = function (tbl, ids)
+local findEventsByIds = function (tbl, ids, fields)
   for i, id in pairs(ids) do
-    local data = hgetall(prefix .. 'events:' .. id)
-    table.insert(tbl, data)
+    if #fields ~= 0 then
+      local data = hmget(prefix .. 'events:' .. id, unpack(fields))
+      table.insert(tbl, data)
+    else
+      local data = hgetall(prefix .. 'events:' .. id)
+      table.insert(tbl, data)
+    end
   end
 end
 
@@ -11,6 +16,14 @@ end
 local eventNames = {}
 for eventName in string.gmatch(args['events'], '([^,]+)') do
   table.insert(eventNames, eventName)
+end
+
+-- Split select string into a table of field names
+local selectedFields = {}
+if args['select'] then
+  for fieldName in string.gmatch(args['select'], '([^,]+)') do
+    table.insert(selectedFields, fieldName);
+  end
 end
 
 local response = {}
@@ -25,10 +38,10 @@ if args['start'] or args['end'] then
     local zsetKey = prefix .. 'indexes:' .. eventName .. ':created_at'
     if args['select'] == '$count' then
       local count = redis.call('zcount', zsetKey, minValue, maxValue)
-      response[eventName] = (response[eventName] or 0) + count
+      response[0] = (response[0] or 0) + count
     else
       local ids = redis.call('zrangebyscore', zsetKey, minValue, maxValue)
-      findEventsByIds(response, ids)
+      findEventsByIds(response, ids, selectedFields)
     end
   end
 else
@@ -38,10 +51,10 @@ else
 
     if args['select'] == '$count' then
       local count = redis.call('scard', setKey)
-      response[eventName] = (response[eventName] or 0) + count
+      response[0] = (response[0] or 0) + count
     else
       local ids = redis.call('smembers', setKey)
-      findEventsByIds(response, ids)
+      findEventsByIds(response, ids, selectedFields)
     end
   end
 end
