@@ -152,4 +152,40 @@ describe('GET /query', function () {
         });
     });
   });
+
+  describe('with `select` given', function() {
+    describe('$count', function() {
+      it('should only return the count of all events', function() {
+        return supertest(logfire.server.server)
+          .get('/query?events=video.success&select=$count')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .then(function (res) {
+            var parsed = JSON.parse(res.body);
+            parsed['video.success'].should.equal(minutes * (successPerMinute));
+          });
+      });
+
+      describe('with a timespan given', function() {
+        it('should only return the count of the events in this timespan', function() {
+          return supertest(logfire.server.server)
+          .get('/query?events=video.success&select=$count&start=' + (date - 60 * 59))
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .then(function (res) {
+            var parsed = JSON.parse(res.body);
+            parsed['video.success'].should.equal(60 * (successPerMinute));
+          });
+        })
+      });
+    });
+
+    describe('one specific field', function() {
+      it('should only return the specific field for each event');
+    });
+
+    describe('multiple fields', function() {
+      it('should return the specific fields for each event');
+    });
+  });
 });
