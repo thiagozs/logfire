@@ -1,8 +1,8 @@
+/*jshint -W030 */
 'use strict';
 
 var supertest = require('supertest-as-promised');
 var helpers = require('../test-helpers');
-var should = require('should');
 
 describe('GET /query', function () {
   var logfire = null;
