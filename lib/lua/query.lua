@@ -40,7 +40,6 @@ local findEventsByIdsAndGroupByField = function (tbl, ids, fields, groupField)
     local fieldsDict = table.todict(fields)
     local originalFieldsDict = table.todict(originalFields)
 
-    -- if we fetched the field
     if fieldsDict[groupField] and not originalFieldsDict[groupField] then
       event[groupField] = nil
     end
