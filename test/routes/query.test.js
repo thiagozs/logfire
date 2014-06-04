@@ -270,7 +270,7 @@ describe('GET /query', function () {
     });
   });
 
-  describe.only('with `group` given', function() {
+  describe('with `group` given', function() {
     describe('$event', function() {
       it('should group all events by the event name', function() {
         return supertest(logfire.server.server)

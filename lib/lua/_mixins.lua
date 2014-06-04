@@ -11,6 +11,10 @@ end
 
 -- Split the given string at every comma and return a table
 function mixins.splitList(str)
+  if str == nil then
+    return {}
+  end
+
   local list = {}
   for part in string.gmatch(str, '([^,]+)') do
     table.insert(list, part)
@@ -23,6 +27,32 @@ function mixins.concatTables(table1, table2)
   for _, value in ipairs(table2) do
     table.insert(table1, value)
   end
+end
+
+-- Check whether the given table contains the given value
+function mixins.tableContains(tbl, value)
+  -- Convert to dict
+  local tempDict = {}
+  for _, value in ipairs(tbl) do
+    tempDict[value] = true
+  end
+  return tempDict[value]
+end
+
+-- Return a unique representation of the given table
+function mixins.uniqueTable(tbl)
+  -- Convert to dict
+  local tempDict = {}
+  for _, value in ipairs(tbl) do
+    tempDict[value] = true
+  end
+
+  -- Convert to table
+  local uniqueTable = {}
+  for key, _ in pairs(tempDict) do
+    table.insert(uniqueTable, key)
+  end
+  return uniqueTable
 end
 
 -- Gets all fields from a hash as a dictionary
