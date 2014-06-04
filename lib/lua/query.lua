@@ -1,9 +1,9 @@
-require "_mixins"
+require "_utils"
 require "_event-helpers"
-local args = mixins.getArgs()
+local args = utils.getArgs()
 local prefix = args['prefix']
-local eventNames = mixins.splitList(args['events'])
-local selectedFields = mixins.splitList(args['select'])
+local eventNames = utils.splitList(args['events'])
+local selectedFields = utils.splitList(args['select'])
 local response = {}
 
 -- Find event ids for all events by (optional) range of $date
@@ -47,7 +47,7 @@ elseif args['group'] then
   local originalSelectedFields = selectedFields
   if #selectedFields > 0 then
     table.insert(selectedFields, args['group'])
-    selectedFields = mixins.uniqueTable(selectedFields)
+    selectedFields = utils.uniqueTable(selectedFields)
   end
 
   -- Get all events
@@ -66,7 +66,7 @@ elseif args['group'] then
 
       -- Delete the `group` field from the event if it was not
       -- in `select`
-      local groupFieldWasSelected = mixins.tableContains(originalSelectedFields, args['group'])
+      local groupFieldWasSelected = utils.tableContains(originalSelectedFields, args['group'])
       if #selectedFields > 0 and groupFieldWasSelected then
         event[args['group']] = nil
       end

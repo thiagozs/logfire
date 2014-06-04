@@ -1,7 +1,7 @@
-local mixins = {}
+local utils = {}
 
 -- Turn KEYS and ARGS into a table
-function mixins.getArgs()
+function utils.getArgs()
   local args = {}
   for i, v in ipairs(KEYS) do
     args[ v ] = ARGV[ i ]
@@ -10,7 +10,7 @@ function mixins.getArgs()
 end
 
 -- Split the given string at every comma and return a table
-function mixins.splitList(str)
+function utils.splitList(str)
   if str == nil then
     return {}
   end
@@ -23,14 +23,14 @@ function mixins.splitList(str)
 end
 
 -- Add all items of table2 to table1
-function mixins.concatTables(table1, table2)
+function utils.concatTables(table1, table2)
   for _, value in ipairs(table2) do
     table.insert(table1, value)
   end
 end
 
 -- Check whether the given table contains the given value
-function mixins.tableContains(tbl, value)
+function utils.tableContains(tbl, value)
   -- Convert to dict
   local tempDict = {}
   for _, value in ipairs(tbl) do
@@ -40,7 +40,7 @@ function mixins.tableContains(tbl, value)
 end
 
 -- Return a unique representation of the given table
-function mixins.uniqueTable(tbl)
+function utils.uniqueTable(tbl)
   -- Convert to dict
   local tempDict = {}
   for _, value in ipairs(tbl) do

@@ -1,5 +1,5 @@
-require "_mixins"
-local args = mixins.getArgs()
+require "_utils"
+local args = utils.getArgs()
 
 -- Finds all keys with the given prefix and deletes them
 local keys = redis.call('keys', args['prefix'] .. '*')
