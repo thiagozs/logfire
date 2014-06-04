@@ -313,16 +313,32 @@ describe('GET /query', function () {
     describe('with a single field', function() {
       it('should group all events by the given field', function() {
         return supertest(logfire.server.server)
-            .get('/query?events=video.success,video.error&group=server')
+          .get('/query?events=video.success,video.error&group=server')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .then(function (res) {
+            var body = res.body;
+            var allEvents = minutes * (successPerMinute + errorPerMinute);
+            Object.keys(body).length.should.equal(2);
+            body['1'].length.should.equal(allEvents / 2);
+            body['2'].length.should.equal(allEvents / 2);
+          });
+      });
+
+      describe('in combination with select=$count', function() {
+        it('should group the event counts by the given field', function() {
+          return supertest(logfire.server.server)
+            .get('/query?events=video.success,video.error&group=server&select=$count')
             .expect('Content-Type', /json/)
             .expect(200)
             .then(function (res) {
               var body = res.body;
               var allEvents = minutes * (successPerMinute + errorPerMinute);
               Object.keys(body).length.should.equal(2);
-              body['1'].length.should.equal(allEvents / 2);
-              body['2'].length.should.equal(allEvents / 2);
+              body['1'].should.equal(allEvents / 2);
+              body['2'].should.equal(allEvents / 2);
             });
+        });
       });
 
       describe('if the field does not exist in all events', function() {

@@ -35,6 +35,17 @@ local findEventsByIdsAndGroupByField = function (tbl, ids, fields, groupField)
   end
 end
 
+local groupEventCountsByField = function (tbl, ids, groupField)
+  -- Get all events
+  local eventsList = {}
+  findEventsByIds(eventsList, ids, {groupField})
+
+  -- Iterate over all events and group them
+  for i, event in pairs(eventsList) do
+    tbl[event[groupField]] = (tbl[event[groupField]] or 0) + 1
+  end
+end
+
 -- Split events string into a table of strings
 local eventNames = {}
 for eventName in string.gmatch(args['events'], '([^,]+)') do
@@ -99,7 +110,7 @@ else
         response[eventName] = (response[eventName] or 0) + count
       elseif args['group'] then
         local ids = redis.call('smembers', setKey)
-        findEventsByIdsAndGroupByField(response, ids, {}, args['group'])
+        groupEventCountsByField(response, ids, args['group'])
       else
         response[0] = (response[0] or 0) + count
       end
@@ -111,7 +122,7 @@ else
         response[eventName] = {}
         findEventsByIds(response[eventName], ids, selectedFields)
       elseif args['group'] then
-        findEventsByIdsAndGroupByField(response, ids, {}, args['group'])
+        findEventsByIdsAndGroupByField(response, ids, selectedFields, args['group'])
       else
         findEventsByIds(response, ids, selectedFields)
       end
