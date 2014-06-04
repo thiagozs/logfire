@@ -86,12 +86,14 @@ if args['start'] or args['end'] then
 
       -- If we only need the amount of events, we can make use of redis
       -- `zcount` command
-      local count = redis.call('zcount', zsetKey, minValue, maxValue)
       if args['group'] == '$event' then
+        local count = redis.call('zcount', zsetKey, minValue, maxValue)
         response[eventName] = (response[eventName] or 0) + count
       elseif args['group'] then
+        local ids = redis.call('zrangebyscore', zsetKey, minValue, maxValue)
         findEventsByIdsAndGroupByField(response, ids, {}, args['group'])
       else
+        local count = redis.call('zcount', zsetKey, minValue, maxValue)
         response[0] = (response[0] or 0) + count
       end
 

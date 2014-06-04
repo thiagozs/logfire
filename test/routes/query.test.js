@@ -305,7 +305,7 @@ describe('GET /query', function () {
       describe('$date[hour]', function() {
         it('should create buckets for each hour', function() {
           return supertest(logfire.server.server)
-            .get('/query?events=video.success&group=$date[hour]&start=' + (date - 119 * 60))
+            .get('/query?events=video.success&group=$date[hour]&select=$count&start=' + (date - 119 * 60))
             .expect('Content-Type', /json/)
             .expect(200)
             .then(function (res) {
