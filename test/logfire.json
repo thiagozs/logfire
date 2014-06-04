@@ -17,6 +17,9 @@
             "video_identifier": {
               "type": "string"
             },
+            "server": {
+              "type": "number"
+            },
             "created_at": {
               "type": "timestamp",
               "required": true
@@ -36,6 +39,9 @@
             },
             "info": {
               "type": "string"
+            },
+            "server": {
+              "type": "number"
             },
             "created_at": {
               "type": "timestamp",

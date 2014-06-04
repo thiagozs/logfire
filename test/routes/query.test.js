@@ -40,7 +40,8 @@ describe('GET /query', function () {
           data: {
             provider: ['youtube', 'vimeo', 'dailymotion'][Math.floor(Math.random() * 3)],
             video_identifier: 'random',
-            created_at: date - minute * 60
+            created_at: date - minute * 60,
+            server: Math.round(Math.random() * 5)
           }
         };
         tasks.push(Q.invoke(logfire.store.events, 'create', event));
@@ -52,7 +53,8 @@ describe('GET /query', function () {
           event: 'error',
           data: {
             code: ['video_not_found', 'inappropriate_content'][Math.floor(Math.random() * 2)],
-            created_at: date - minute * 60
+            created_at: date - minute * 60,
+            server: Math.round(Math.random() * 5)
           }
         };
         tasks.push(Q.invoke(logfire.store.events, 'create', event));
@@ -207,7 +209,18 @@ describe('GET /query', function () {
     });
 
     describe('multiple fields', function() {
-      it('should return the specific fields for each event');
+      it('should return the specific fields for each event', function() {
+        return supertest(logfire.server.server)
+          .get('/query?events=video.success&select=server,created_at')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .then(function (res) {
+            var parsed = JSON.parse(res.body);
+            Object.keys(parsed[0]).length.should.equal(2);
+            parsed[0].created_at.should.exist;
+            parsed[0].server.should.exist;
+          });
+      });
 
       describe('if one of the fields does not exist in all events', function() {
         it('should return an error');
