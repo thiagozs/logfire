@@ -326,9 +326,9 @@ describe('GET /query', function () {
       });
 
       describe('in combination with select=$count', function() {
-        it('should return the event\'s field by the given field', function() {
+        it('should group the event counts by the given field', function() {
           return supertest(logfire.server.server)
-            .get('/query?events=video.success,video.error&group=server&select=server')
+            .get('/query?events=video.success,video.error&group=server&select=$count')
             .expect('Content-Type', /json/)
             .expect(200)
             .then(function (res) {
@@ -342,7 +342,7 @@ describe('GET /query', function () {
       });
 
       describe('in combination with select=field', function() {
-        it('should group the event counts by the given field', function() {
+        it('should return the event\'s field grouped by the given `group` field', function() {
           return supertest(logfire.server.server)
             .get('/query?events=video.success,video.error&group=server&select=$id')
             .expect('Content-Type', /json/)
