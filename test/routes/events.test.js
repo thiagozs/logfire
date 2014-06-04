@@ -99,12 +99,11 @@ describe('POST /events', function () {
           category: 'video',
           event: 'success',
           data: {
-            provider: 'youtube',
             video_identifier: 'abcdefghijk'
           }
         })
         .expect(JSON.stringify({
-          error: 'Field "created_at" is missing.'
+          error: 'Field "provider" is missing.'
         }))
         .expect(400, done);
     });
@@ -120,11 +119,11 @@ describe('POST /events', function () {
           data: {
             provider: 'youtube',
             video_identifier: 'abcdefghijk',
-            created_at: 'foobar'
+            server: 'foobar'
           }
         })
         .expect(JSON.stringify({
-          error: 'Field "created_at" is of type string, but expected it to be timestamp.'
+          error: 'Field "server" is of type string, but expected it to be number.'
         }))
         .expect(400, done);
     });
@@ -139,8 +138,7 @@ describe('POST /events', function () {
           event: 'success',
           data: {
             provider: 'youtube',
-            video_identifier: 'abcdefghijk',
-            created_at: Date.now()
+            video_identifier: 'abcdefghijk'
           }
         })
         .expect(JSON.stringify({
@@ -157,8 +155,7 @@ describe('POST /events', function () {
           event: 'success',
           data: {
             provider: 'youtube',
-            video_identifier: 'abcdefghijk',
-            created_at: Date.now()
+            video_identifier: 'abcdefghijk'
           }
         })
         .expect(200)
@@ -180,16 +177,21 @@ describe('POST /events', function () {
           data: {
             provider: 'youtube',
             video_identifier: 'abcdefghijk',
-            created_at: Date.now()
+            server: 5
           }
         })
         .expect(200)
         .then(function () {
           var redis = logfire.store.redis;
-          return Q.ninvoke(redis, 'zrangebyscore', 'logfire:indexes:video.success:created_at', '-inf', '+inf', 'withscores');
+          return Q.all([
+            Q.ninvoke(redis, 'zrangebyscore', 'logfire:indexes:video.success:$date', '-inf', '+inf', 'withscores'),
+            Q.ninvoke(redis, 'zrangebyscore', 'logfire:indexes:video.success:server', '-inf', '+inf', 'withscores')
+          ]);
         })
-        .then(function (result) {
-          result.length.should.equal(2);
+        .then(function (results) {
+          results.length.should.equal(2);
+          results[0].length.should.equal(2);
+          results[1].length.should.equal(2);
         });
     });
   });

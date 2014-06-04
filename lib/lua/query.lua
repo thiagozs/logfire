@@ -35,7 +35,8 @@ if args['start'] or args['end'] then
   if args['end'] then maxValue = args['end'] end
 
   for i, eventName in pairs(eventNames) do
-    local zsetKey = prefix .. 'indexes:' .. eventName .. ':created_at'
+    local zsetKey = prefix .. 'indexes:' .. eventName .. ':$date'
+    redis.log(redis.LOG_NOTICE, zsetKey)
     if args['select'] == '$count' then
       local count = redis.call('zcount', zsetKey, minValue, maxValue)
       response[0] = (response[0] or 0) + count

@@ -12,17 +12,14 @@
         "success": {
           "fields": {
             "provider": {
-              "type": "string"
+              "type": "string",
+              "required": true
             },
             "video_identifier": {
               "type": "string"
             },
             "server": {
               "type": "number"
-            },
-            "created_at": {
-              "type": "timestamp",
-              "required": true
             }
           }
         },
@@ -42,10 +39,6 @@
             },
             "server": {
               "type": "number"
-            },
-            "created_at": {
-              "type": "timestamp",
-              "required": true
             }
           }
         }
@@ -53,22 +46,8 @@
     },
     "cache": {
       "events": {
-        "hit": {
-          "fields": {
-            "created_at": {
-              "type": "timestamp",
-              "required": true
-            }
-          }
-        },
-        "miss": {
-          "fields": {
-            "created_at": {
-              "type": "timestamp",
-              "required": true
-            }
-          }
-        }
+        "hit": {},
+        "miss": {}
       }
     }
   }
