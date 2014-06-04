@@ -32,9 +32,9 @@ describe('GET /query', function () {
 
     var tasks = [];
     var event, i;
+    var server;
     for (var minute = 0; minute < minutes; minute++) {
       for (i = 0; i < successPerMinute; i++) {
-        var server;
         if (minute < minutes / 2) {
           server = 1;
         } else {
@@ -326,9 +326,9 @@ describe('GET /query', function () {
       });
 
       describe('in combination with select=$count', function() {
-        it('should group the event counts by the given field', function() {
+        it('should return the event\'s field by the given field', function() {
           return supertest(logfire.server.server)
-            .get('/query?events=video.success,video.error&group=server&select=$count')
+            .get('/query?events=video.success,video.error&group=server&select=server')
             .expect('Content-Type', /json/)
             .expect(200)
             .then(function (res) {
@@ -337,6 +337,21 @@ describe('GET /query', function () {
               Object.keys(body).length.should.equal(2);
               body['1'].should.equal(allEvents / 2);
               body['2'].should.equal(allEvents / 2);
+            });
+        });
+      });
+
+      describe('in combination with select=field', function() {
+        it('should group the event counts by the given field', function() {
+          return supertest(logfire.server.server)
+            .get('/query?events=video.success,video.error&group=server&select=$id')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(function (res) {
+              var body = res.body;
+              Object.keys(body).length.should.equal(2);
+              Object.keys(body['1'][0]).length.should.equal(1);
+              body['1'][0].$id.should.exist;
             });
         });
       });

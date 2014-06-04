@@ -39,10 +39,10 @@ end
 
 -- Return a table representation of the given dict
 local dict = {}
-function dict.totable(dict)
+function dict.totable(dct)
   local tbl = {}
-  for k, v in ipairs(tbl) do
+  for k, v in pairs(dct) do
     table.insert(tbl, k)
   end
-  return dict
+  return tbl
 end

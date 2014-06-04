@@ -16,6 +16,7 @@ local findEventsByIdsAndGroupByField = function (tbl, ids, fields, groupField)
   -- Turn fields into a dict, add group field, turn back
   -- into a table. We do that to make sure that the group
   -- field only occurs once in the table of fields.
+  local originalFields = fields
   if fields then
     local fieldsDict = table.todict(fields)
     fieldsDict[groupField] = true
@@ -31,7 +32,19 @@ local findEventsByIdsAndGroupByField = function (tbl, ids, fields, groupField)
     if not tbl[event[groupField]] then
       tbl[event[groupField]] = {}
     end
-    table.insert(tbl[event[groupField]], event)
+    local key = tbl[event[groupField]]
+
+    -- If the groupField is not in the selected fields,
+    -- then remove it from the event (we fetched it to
+    -- be able to group)
+    local fieldsDict = table.todict(fields)
+    local originalFieldsDict = table.todict(originalFields)
+
+    -- if we fetched the field
+    if fieldsDict[groupField] and not originalFieldsDict[groupField] then
+      event[groupField] = nil
+    end
+    table.insert(key, event)
   end
 end
 
