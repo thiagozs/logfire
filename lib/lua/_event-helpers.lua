@@ -13,9 +13,9 @@ function eventHelpers.findEventsByIds(prefix, ids, fields)
     local event
 
     if fields ~= nil and #fields > 0 then
-      event = hmget(eventKey, unpack(fields))
+      event = utils.hmget(eventKey, unpack(fields))
     else
-      event = hgetall(eventKey)
+      event = utils.hgetall(eventKey)
     end
 
     table.insert(events, event)
