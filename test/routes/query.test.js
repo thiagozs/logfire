@@ -85,8 +85,8 @@ describe('GET /query', function () {
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
-            var parsed = JSON.parse(res.body);
-            parsed.length.should.equal(minutes * successPerMinute);
+            var body = res.body;
+            body.length.should.equal(minutes * successPerMinute);
           });
       });
 
@@ -110,8 +110,8 @@ describe('GET /query', function () {
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
-            var parsed = JSON.parse(res.body);
-            parsed.length.should.equal(minutes * (successPerMinute + errorPerMinute));
+            var body = res.body;
+            body.length.should.equal(minutes * (successPerMinute + errorPerMinute));
           });
       });
 
@@ -136,8 +136,8 @@ describe('GET /query', function () {
         .expect('Content-Type', /json/)
         .expect(200)
         .then(function (res) {
-          var parsed = JSON.parse(res.body);
-          parsed.length.should.equal(60 * (successPerMinute));
+          var body = res.body;
+          body.length.should.equal(60 * (successPerMinute));
         });
     });
   });
@@ -149,8 +149,8 @@ describe('GET /query', function () {
         .expect('Content-Type', /json/)
         .expect(200)
         .then(function (res) {
-          var parsed = JSON.parse(res.body);
-          parsed.length.should.equal(30 * (successPerMinute));
+          var body = res.body;
+          body.length.should.equal(30 * (successPerMinute));
         });
     });
   });
@@ -163,8 +163,8 @@ describe('GET /query', function () {
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
-            var parsed = JSON.parse(res.body);
-            parsed[0].should.equal(minutes * (successPerMinute));
+            var body = res.body;
+            body[0].should.equal(minutes * (successPerMinute));
           });
       });
 
@@ -175,8 +175,8 @@ describe('GET /query', function () {
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
-            var parsed = JSON.parse(res.body);
-            parsed[0].should.equal(60 * (successPerMinute));
+            var body = res.body;
+            body[0].should.equal(60 * (successPerMinute));
           });
         });
       });
@@ -189,10 +189,10 @@ describe('GET /query', function () {
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
-            var parsed = JSON.parse(res.body);
-            Object.keys(parsed[0]).length.should.equal(2);
-            parsed[0].$id.should.exist;
-            parsed[0].$date.should.exist;
+            var body = res.body;
+            Object.keys(body[0]).length.should.equal(2);
+            body[0].$id.should.exist;
+            body[0].$date.should.exist;
           });
       });
 
@@ -216,9 +216,9 @@ describe('GET /query', function () {
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
-            var parsed = JSON.parse(res.body);
-            Object.keys(parsed[0]).length.should.equal(1);
-            parsed[0].$date.should.exist;
+            var body = res.body;
+            Object.keys(body[0]).length.should.equal(1);
+            body[0].$date.should.exist;
           });
       });
 
@@ -242,10 +242,10 @@ describe('GET /query', function () {
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
-            var parsed = JSON.parse(res.body);
-            Object.keys(parsed[0]).length.should.equal(2);
-            parsed[0].$date.should.exist;
-            parsed[0].server.should.exist;
+            var body = res.body;
+            Object.keys(body[0]).length.should.equal(2);
+            body[0].$date.should.exist;
+            body[0].server.should.exist;
           });
       });
 
@@ -271,12 +271,13 @@ describe('GET /query', function () {
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
-            var parsed = JSON.parse(res.body);
-            Object.keys(parsed).length.should.equal(2);
-            parsed['video.success'].length.should.equal(minutes * successPerMinute);
-            parsed['video.error'].length.should.equal(minutes * errorPerMinute);
+            var body = res.body;
+            Object.keys(body).length.should.equal(2);
+            body['video.success'].length.should.equal(minutes * successPerMinute);
+            body['video.error'].length.should.equal(minutes * errorPerMinute);
           });
       });
+
       describe('in combination with select=$count', function() {
         it('should group the event counts by the event name', function() {
           return supertest(logfire.server.server)
@@ -284,10 +285,10 @@ describe('GET /query', function () {
             .expect('Content-Type', /json/)
             .expect(200)
             .then(function (res) {
-              var parsed = JSON.parse(res.body);
-              Object.keys(parsed).length.should.equal(2);
-              parsed['video.success'].should.equal(minutes * successPerMinute);
-              parsed['video.error'].should.equal(minutes * errorPerMinute);
+              var body = res.body;
+              Object.keys(body).length.should.equal(2);
+              body['video.success'].should.equal(minutes * successPerMinute);
+              body['video.error'].should.equal(minutes * errorPerMinute);
             });
         });
       });

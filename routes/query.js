@@ -11,7 +11,8 @@ module.exports = {
   query: function (logfire, req, res) {
     return Q.invoke(logfire.store.query, 'query', req.query)
       .then(function (response) {
-        res.json(response);
+        res.setHeader('Content-Type', 'application/json');
+        res.end(response);
       });
   }
 };
