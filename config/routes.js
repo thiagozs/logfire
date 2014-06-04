@@ -14,5 +14,5 @@ module.exports = function (map) {
   /**
    * Routes for `routes/query.js`
    */
-  map.get('/query', 'query#query');
+  map.post('/query', 'query#query');
 };

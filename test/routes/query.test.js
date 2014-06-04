@@ -75,7 +75,7 @@ describe('GET /query', function () {
     describe('without any events given', function() {
       it('should return an error', function() {
         return supertest(logfire.server.server)
-          .get('/query')
+          .post('/query')
           .expect('Content-Type', /json/)
           .expect(JSON.stringify({
             error: 'No events given.'
@@ -88,7 +88,10 @@ describe('GET /query', function () {
     describe('with only one event given', function() {
       it('should return all events of this event', function() {
         return supertest(logfire.server.server)
-          .get('/query?events=video.success')
+          .post('/query')
+          .send({
+            events: ['video.success']
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
@@ -100,7 +103,10 @@ describe('GET /query', function () {
       describe('if the event does not exist', function() {
         it('should return an error', function() {
           return supertest(logfire.server.server)
-            .get('/query?events=foo.bar')
+            .post('/query')
+            .send({
+              events: ['foo.bar']
+            })
             .expect('Content-Type', /json/)
             .expect(JSON.stringify({
               error: 'The event "foo.bar" does not exist.'
@@ -113,7 +119,10 @@ describe('GET /query', function () {
     describe('with multiple events given', function() {
       it('should return all events of these events', function() {
         return supertest(logfire.server.server)
-          .get('/query?events=video.success,video.error')
+          .post('/query')
+          .send({
+            events: ['video.success', 'video.error']
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
@@ -125,7 +134,10 @@ describe('GET /query', function () {
       describe('if one of the events does not exist', function() {
         it('should return an error', function() {
           return supertest(logfire.server.server)
-            .get('/query?events=video.success,foo.bar')
+            .post('/query')
+            .send({
+              events: ['video.success', 'foo.bar']
+            })
             .expect('Content-Type', /json/)
             .expect(JSON.stringify({
               error: 'The event "foo.bar" does not exist.'
@@ -139,7 +151,11 @@ describe('GET /query', function () {
   describe('with `start` given', function() {
     it('should only return events created after `start`', function() {
       return supertest(logfire.server.server)
-        .get('/query?events=video.success&start=' + (date - 60 * 59))
+        .post('/query')
+        .send({
+          events: ['video.success'],
+          start: date - 60 * 59
+        })
         .expect('Content-Type', /json/)
         .expect(200)
         .then(function (res) {
@@ -152,7 +168,12 @@ describe('GET /query', function () {
   describe('with `start` and `end` given', function() {
     it('should only return events created in this timespan', function() {
       return supertest(logfire.server.server)
-        .get('/query?events=video.success&start=' + (date - 60 * 59) + '&end=' + (date - 30 * 60))
+        .post('/query')
+        .send({
+          events: ['video.success'],
+          start: date - 60 * 59,
+          end: date - 30 * 60
+        })
         .expect('Content-Type', /json/)
         .expect(200)
         .then(function (res) {
@@ -166,7 +187,11 @@ describe('GET /query', function () {
     describe('$count', function() {
       it('should only return the count of all events', function() {
         return supertest(logfire.server.server)
-          .get('/query?events=video.success&select=$count')
+          .post('/query')
+          .send({
+            events: ['video.success'],
+            select: ['$count']
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
@@ -178,7 +203,12 @@ describe('GET /query', function () {
       describe('with a timespan given', function() {
         it('should only return the count of the events in this timespan', function() {
           return supertest(logfire.server.server)
-          .get('/query?events=video.success&select=$count&start=' + (date - 60 * 59))
+          .post('/query')
+          .send({
+            events: ['video.success'],
+            select: ['$count'],
+            start: date - 60 * 59
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
@@ -192,7 +222,11 @@ describe('GET /query', function () {
     describe('$id', function() {
       it('should return the id next to other fields', function() {
         return supertest(logfire.server.server)
-          .get('/query?events=video.success&select=$id,$date')
+          .post('/query')
+          .send({
+            events: ['video.success'],
+            select: ['$id', '$date']
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
@@ -206,7 +240,11 @@ describe('GET /query', function () {
       describe('if the field does not exist in all events', function() {
         it('should return an error', function() {
           return supertest(logfire.server.server)
-            .get('/query?events=video.success,video.error&select=video_identifier')
+            .post('/query')
+            .send({
+              events: ['video.success', 'video.error'],
+              select: ['video_identifier']
+            })
             .expect('Content-Type', /json/)
             .expect(JSON.stringify({
               error: 'The field "video_identifier" does not exist in all of the requested events.'
@@ -219,7 +257,11 @@ describe('GET /query', function () {
     describe('one specific field', function() {
       it('should only return the specific field for each event', function() {
         return supertest(logfire.server.server)
-          .get('/query?events=video.success&select=$date')
+          .post('/query')
+          .send({
+            events: ['video.success'],
+            select: ['$date']
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
@@ -232,7 +274,11 @@ describe('GET /query', function () {
       describe('if the field does not exist in all events', function() {
         it('should return an error', function() {
           return supertest(logfire.server.server)
-            .get('/query?events=video.success,video.error&select=video_identifier')
+            .post('/query')
+            .send({
+              events: ['video.success', 'video.error'],
+              select: ['video_identifier']
+            })
             .expect('Content-Type', /json/)
             .expect(JSON.stringify({
               error: 'The field "video_identifier" does not exist in all of the requested events.'
@@ -245,7 +291,11 @@ describe('GET /query', function () {
     describe('multiple fields', function() {
       it('should return the specific fields for each event', function() {
         return supertest(logfire.server.server)
-          .get('/query?events=video.success&select=server,$date')
+          .post('/query')
+          .send({
+            events: ['video.success'],
+            select: ['server', '$date']
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
@@ -259,7 +309,11 @@ describe('GET /query', function () {
       describe('if one of the fields does not exist in all events', function() {
         it('should return an error', function() {
           return supertest(logfire.server.server)
-            .get('/query?events=video.success,video.error&select=$date,video_identifier')
+            .post('/query')
+            .send({
+              events: ['video.success', 'video.error'],
+              select: ['$date', 'video_identifier']
+            })
             .expect('Content-Type', /json/)
             .expect(JSON.stringify({
               error: 'The field "video_identifier" does not exist in all of the requested events.'
@@ -274,7 +328,11 @@ describe('GET /query', function () {
     describe('$event', function() {
       it('should group all events by the event name', function() {
         return supertest(logfire.server.server)
-          .get('/query?events=video.success,video.error&group=$event')
+          .post('/query')
+          .send({
+            events: ['video.success', 'video.error'],
+            group: '$event'
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
@@ -288,7 +346,12 @@ describe('GET /query', function () {
       describe('in combination with select=$count', function() {
         it('should group the event counts by the event name', function() {
           return supertest(logfire.server.server)
-            .get('/query?events=video.success,video.error&group=$event&select=$count')
+            .post('/query')
+            .send({
+              events: ['video.success', 'video.error'],
+              select: ['$count'],
+              group: '$event'
+            })
             .expect('Content-Type', /json/)
             .expect(200)
             .then(function (res) {
@@ -305,7 +368,12 @@ describe('GET /query', function () {
       describe('$date[minute]', function() {
         it('should create buckets for each minute', function() {
           return supertest(logfire.server.server)
-            .get('/query?events=video.success&group=$date[minute]&start=' + (date - 119 * 60))
+            .post('/query')
+            .send({
+              events: ['video.success'],
+              group: '$date[minute]',
+              start: date - 119 * 60
+            })
             .expect('Content-Type', /json/)
             .expect(200)
             .then(function (res) {
@@ -321,7 +389,11 @@ describe('GET /query', function () {
     describe('with a single field', function() {
       it('should group all events by the given field', function() {
         return supertest(logfire.server.server)
-          .get('/query?events=video.success,video.error&group=server')
+          .post('/query')
+          .send({
+            events: ['video.success', 'video.error'],
+            group: 'server'
+          })
           .expect('Content-Type', /json/)
           .expect(200)
           .then(function (res) {
@@ -336,7 +408,12 @@ describe('GET /query', function () {
       describe('in combination with select=$count', function() {
         it('should group the event counts by the given field', function() {
           return supertest(logfire.server.server)
-            .get('/query?events=video.success,video.error&group=server&select=$count')
+            .post('/query')
+            .send({
+              events: ['video.success', 'video.error'],
+              select: ['$count'],
+              group: 'server'
+            })
             .expect('Content-Type', /json/)
             .expect(200)
             .then(function (res) {
@@ -352,7 +429,12 @@ describe('GET /query', function () {
       describe('in combination with select=field', function() {
         it('should return the event\'s field grouped by the given `group` field', function() {
           return supertest(logfire.server.server)
-            .get('/query?events=video.success,video.error&group=server&select=$id')
+            .post('/query')
+            .send({
+              events: ['video.success', 'video.error'],
+              select: ['$id'],
+              group: 'server'
+            })
             .expect('Content-Type', /json/)
             .expect(200)
             .then(function (res) {
@@ -367,7 +449,11 @@ describe('GET /query', function () {
       describe('if the field does not exist in all events', function() {
         it('should return an error', function() {
           return supertest(logfire.server.server)
-            .get('/query?events=video.success,video.error&group=video_identifier')
+            .post('/query')
+            .send({
+              events: ['video.success', 'video.error'],
+              group: 'video_identifier'
+            })
             .expect('Content-Type', /json/)
             .expect(JSON.stringify({
               error: 'The field "video_identifier" does not exist in all of the requested events.'
