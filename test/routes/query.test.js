@@ -34,14 +34,21 @@ describe('GET /query', function () {
     var event, i;
     for (var minute = 0; minute < minutes; minute++) {
       for (i = 0; i < successPerMinute; i++) {
+        var server;
+        if (minute < minutes / 2) {
+          server = 1;
+        } else {
+          server = 2;
+        }
+
         event = {
           category: 'video',
           event: 'success',
           data: {
-            provider: ['youtube', 'vimeo', 'dailymotion'][Math.floor(Math.random() * 3)],
+            provider: ['youtube', 'vimeo'][Math.floor(Math.random() * 2)],
             video_identifier: 'random',
             $date: date - minute * 60,
-            server: Math.round(Math.random() * 5)
+            server: server
           }
         };
         tasks.push(Q.invoke(logfire.store.events, 'create', event));
@@ -54,7 +61,7 @@ describe('GET /query', function () {
           data: {
             code: ['video_not_found', 'inappropriate_content'][Math.floor(Math.random() * 2)],
             $date: date - minute * 60,
-            server: Math.round(Math.random() * 5)
+            server: server
           }
         };
         tasks.push(Q.invoke(logfire.store.events, 'create', event));
@@ -300,6 +307,34 @@ describe('GET /query', function () {
       });
       describe('$date[minute]', function() {
         it('should create buckets for each minute');
+      });
+    });
+
+    describe('with a single field', function() {
+      it('should group all events by the given field', function() {
+        return supertest(logfire.server.server)
+            .get('/query?events=video.success,video.error&group=server')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(function (res) {
+              var body = res.body;
+              var allEvents = minutes * (successPerMinute + errorPerMinute);
+              Object.keys(body).length.should.equal(2);
+              body['1'].length.should.equal(allEvents / 2);
+              body['2'].length.should.equal(allEvents / 2);
+            });
+      });
+
+      describe('if the field does not exist in all events', function() {
+        it('should return an error', function() {
+          return supertest(logfire.server.server)
+            .get('/query?events=video.success,video.error&group=video_identifier')
+            .expect('Content-Type', /json/)
+            .expect(JSON.stringify({
+              error: 'The field "video_identifier" does not exist in all of the requested events.'
+            }))
+            .expect(400);
+        });
       });
     });
   });

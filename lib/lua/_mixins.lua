@@ -27,3 +27,22 @@ local hmget = function (key, ...)
   for i, v in ipairs(bulk) do result[ arg[i] ] = v end
   return result
 end
+
+-- Return a dict representation of the given table
+function table.todict(tbl)
+  local dict = {}
+  for k, v in pairs(tbl) do
+    dict[v] = true
+  end
+  return dict
+end
+
+-- Return a table representation of the given dict
+local dict = {}
+function dict.totable(dict)
+  local tbl = {}
+  for k, v in ipairs(tbl) do
+    table.insert(tbl, k)
+  end
+  return dict
+end
