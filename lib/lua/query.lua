@@ -38,10 +38,19 @@ if args['start'] or args['end'] then
     local zsetKey = prefix .. 'indexes:' .. eventName .. ':$date'
     if args['select'] == '$count' then
       local count = redis.call('zcount', zsetKey, minValue, maxValue)
-      response[0] = (response[0] or 0) + count
+      if args['group'] == '$event' then
+        response[eventName] = (response[eventName] or 0) + count
+      else
+        response[0] = (response[0] or 0) + count
+      end
     else
       local ids = redis.call('zrangebyscore', zsetKey, minValue, maxValue)
-      findEventsByIds(response, ids, selectedFields)
+      if args['group'] == '$event' then
+        response[eventName] = {}
+        findEventsByIds(response[eventName], ids, selectedFields)
+      else
+        findEventsByIds(response, ids, selectedFields)
+      end
     end
   end
 else
@@ -51,10 +60,19 @@ else
 
     if args['select'] == '$count' then
       local count = redis.call('scard', setKey)
-      response[0] = (response[0] or 0) + count
+      if args['group'] == '$event' then
+        response[eventName] = (response[eventName] or 0) + count
+      else
+        response[0] = (response[0] or 0) + count
+      end
     else
       local ids = redis.call('smembers', setKey)
-      findEventsByIds(response, ids, selectedFields)
+      if args['group'] == '$event' then
+        response[eventName] = {}
+        findEventsByIds(response[eventName], ids, selectedFields)
+      else
+        findEventsByIds(response, ids, selectedFields)
+      end
     end
   end
 end

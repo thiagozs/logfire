@@ -265,9 +265,31 @@ describe('GET /query', function () {
 
   describe('with `group` given', function() {
     describe('$event', function() {
-      it('should group all events by the event name');
+      it('should group all events by the event name', function() {
+        return supertest(logfire.server.server)
+          .get('/query?events=video.success,video.error&group=$event')
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .then(function (res) {
+            var parsed = JSON.parse(res.body);
+            Object.keys(parsed).length.should.equal(2);
+            parsed['video.success'].length.should.equal(minutes * successPerMinute);
+            parsed['video.error'].length.should.equal(minutes * errorPerMinute);
+          });
+      });
       describe('in combination with select=$count', function() {
-        it('should group the event counts by the event name');
+        it('should group the event counts by the event name', function() {
+          return supertest(logfire.server.server)
+            .get('/query?events=video.success,video.error&group=$event&select=$count')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(function (res) {
+              var parsed = JSON.parse(res.body);
+              Object.keys(parsed).length.should.equal(2);
+              parsed['video.success'].should.equal(minutes * successPerMinute);
+              parsed['video.error'].should.equal(minutes * errorPerMinute);
+            });
+        });
       });
     });
 
