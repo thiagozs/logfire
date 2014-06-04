@@ -1,7 +1,28 @@
+local mixins = {}
+
 -- Turn KEYS and ARGS into a table
-local args = {}
-for i, v in ipairs(KEYS) do
-  args[ v ] = ARGV[ i ]
+function mixins.getArgs()
+  local args = {}
+  for i, v in ipairs(KEYS) do
+    args[ v ] = ARGV[ i ]
+  end
+  return args
+end
+
+-- Split the given string at every comma and return a table
+function mixins.splitList(str)
+  local list = {}
+  for part in string.gmatch(str, '([^,]+)') do
+    table.insert(list, part)
+  end
+  return list
+end
+
+-- Add all items of table2 to table1
+function mixins.concatTables(table1, table2)
+  for _, value in ipairs(table2) do
+    table.insert(table1, value)
+  end
 end
 
 -- Gets all fields from a hash as a dictionary

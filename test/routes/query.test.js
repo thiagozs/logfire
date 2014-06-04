@@ -171,7 +171,7 @@ describe('GET /query', function () {
           .expect(200)
           .then(function (res) {
             var body = res.body;
-            body[0].should.equal(minutes * (successPerMinute));
+            body.should.equal(minutes * (successPerMinute));
           });
       });
 
@@ -183,7 +183,7 @@ describe('GET /query', function () {
           .expect(200)
           .then(function (res) {
             var body = res.body;
-            body[0].should.equal(60 * (successPerMinute));
+            body.should.equal(60 * (successPerMinute));
           });
         });
       });
@@ -270,7 +270,7 @@ describe('GET /query', function () {
     });
   });
 
-  describe('with `group` given', function() {
+  describe.only('with `group` given', function() {
     describe('$event', function() {
       it('should group all events by the event name', function() {
         return supertest(logfire.server.server)
