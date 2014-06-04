@@ -301,16 +301,18 @@ describe('GET /query', function () {
       });
     });
 
-    describe.only('$date', function() {
-      describe('$date[hour]', function() {
-        it('should create buckets for each hour', function() {
+    describe('$date', function() {
+      describe('$date[minute]', function() {
+        it('should create buckets for each minute', function() {
           return supertest(logfire.server.server)
-            .get('/query?events=video.success&group=$date[hour]&select=$count&start=' + (date - 119 * 60))
+            .get('/query?events=video.success&group=$date[minute]&start=' + (date - 119 * 60))
             .expect('Content-Type', /json/)
             .expect(200)
             .then(function (res) {
               var body = res.body;
-              Object.keys(body).length.should.equal(2);
+              body.length.should.equal(120);
+              body[0].date.should.exist;
+              body[0].events.length.should.equal(3);
             });
         });
       });

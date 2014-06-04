@@ -17,7 +17,7 @@ local findEventsByIdsAndGroupByField = function (tbl, ids, fields, groupField)
   -- into a table. We do that to make sure that the group
   -- field only occurs once in the table of fields.
   local originalFields = fields
-  if fields then
+  if fields and #fields > 0 then
     local fieldsDict = table.todict(fields)
     fieldsDict[groupField] = true
     fields = dict.totable(fieldsDict)
@@ -91,7 +91,7 @@ if args['start'] or args['end'] then
         response[eventName] = (response[eventName] or 0) + count
       elseif args['group'] then
         local ids = redis.call('zrangebyscore', zsetKey, minValue, maxValue)
-        findEventsByIdsAndGroupByField(response, ids, {}, args['group'])
+        groupEventCountsByField(response, ids, args['group'])
       else
         local count = redis.call('zcount', zsetKey, minValue, maxValue)
         response[0] = (response[0] or 0) + count
