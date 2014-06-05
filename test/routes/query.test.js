@@ -463,4 +463,130 @@ describe('GET /query', function () {
       });
     });
   });
+
+  describe('with `where` given', function() {
+    describe('validations', function() {
+      describe('when condition field does not exist in all events', function() {
+        it('should return an error', function() {
+          return supertest(logfire.server.server)
+            .post('/query')
+            .send({
+              events: ['video.success', 'video.error'],
+              where: {
+                video_identifier: 'random'
+              }
+            })
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .expect(JSON.stringify({
+              error: 'The field "video_identifier" does not exist in all of the requested events.'
+            }));
+        });
+      });
+
+      describe('when condition value is of invalid type', function() {
+        it('should return an error', function() {
+          return supertest(logfire.server.server)
+            .post('/query')
+            .send({
+              events: ['video.success'],
+              where: {
+                server: 'u wot m8?'
+              }
+            })
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .expect(JSON.stringify({
+              error: 'Field "server" is of type string, but expected it to be number.'
+            }));
+        });
+      });
+
+      describe('when passing an invalid operator', function() {
+        it('should return an error', function() {
+          return supertest(logfire.server.server)
+            .post('/query')
+            .send({
+              events: ['video.success'],
+              where: {
+                video_identifier: {
+                  foobar: 10
+                }
+              }
+            })
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .expect(JSON.stringify({
+              error: 'Invalid operator: "foobar"'
+            }));
+        });
+      });
+
+      describe('numeric operators', function() {
+        describe('when used against non-numeric values', function() {
+          it('should return an error', function() {
+            return supertest(logfire.server.server)
+              .post('/query')
+              .send({
+                events: ['video.success'],
+                where: {
+                  video_identifier: {
+                    $gte: 'foo'
+                  }
+                }
+              })
+              .expect('Content-Type', /json/)
+              .expect(400)
+              .expect(JSON.stringify({
+                error: 'Can\'t use numeric operator "$gte" against field "video_identifier" of type string.'
+              }));
+          });
+        });
+      });
+
+      describe('array operators', function() {
+        describe('when not passing an array', function() {
+          it('should return an error', function() {
+            return supertest(logfire.server.server)
+              .post('/query')
+              .send({
+                events: ['video.success'],
+                where: {
+                  video_identifier: {
+                    $in: 'foo'
+                  }
+                }
+              })
+              .expect('Content-Type', /json/)
+              .expect(400)
+              .expect(JSON.stringify({
+                error: 'Array operator "$in" expects an array as value.'
+              }));
+          });
+        });
+      });
+
+      describe('universal operators', function() {
+        describe('when value is of invalid type', function() {
+          it('should return an error', function() {
+            return supertest(logfire.server.server)
+              .post('/query')
+              .send({
+                events: ['video.success'],
+                where: {
+                  server: {
+                    $ne: 'foobarbaz'
+                  }
+                }
+              })
+              .expect('Content-Type', /json/)
+              .expect(400)
+              .expect(JSON.stringify({
+                error: 'Can\'t use operator "$ne" with value of type "string" against field "server" of type number.'
+              }));
+          });
+        });
+      });
+    });
+  });
 });
