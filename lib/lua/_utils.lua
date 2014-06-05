@@ -81,6 +81,19 @@ function utils.stringifyTableValues(tbl)
   return newTable
 end
 
+-- Iterates through the given events, makes sure that
+-- fields specified as numeric are converted to numeric
+function utils.fixFieldTypes(events, fieldTypes)
+  for _, event in ipairs(events) do
+    for key, _ in pairs(event) do
+      local fieldType = fieldTypes[key]
+      if utils.tableContains({'number', 'timestamp'}, fieldType) then
+        event[key] = tonumber(event[key])
+      end
+    end
+  end
+end
+
 -- Return a decode representation of the given value (if not nil)
 function utils.decode(value)
   if not value then

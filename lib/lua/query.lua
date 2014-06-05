@@ -7,6 +7,7 @@ local prefix = args['prefix']
 local eventNames = utils.decode(args['events'])
 local selectedFields = utils.decode(args['select'])
 local where = utils.decode(args['where'])
+local fieldTypes = utils.decode(args['fieldTypes'])
 local response = {}
 
 -- Find event ids for all events by (optional) range of $date
@@ -40,10 +41,12 @@ if args['group'] == '$event' then
         groupValues = #ids
       else
         local events = eventHelpers.findEventsByIds(prefix, ids, selectedFields, where)
+        utils.fixFieldTypes(events, fieldTypes[eventName])
         groupValues = #events
       end
     else
       groupValues = eventHelpers.findEventsByIds(prefix, ids, selectedFields, where)
+      utils.fixFieldTypes(groupValues, fieldTypes[eventName])
     end
 
     response[eventName] = groupValues
@@ -59,11 +62,16 @@ elseif args['group'] then
   end
 
   -- Get all events
-  local events = eventHelpers.findEventsByIds(prefix, allIds, selectedFields, where)
+  local events = {}
+  for eventName, ids in pairs(idsByEvent) do
+    local eventEvents = eventHelpers.findEventsByIds(prefix, ids, selectedFields, where)
+    utils.fixFieldTypes(eventEvents, fieldTypes[eventName])
+    utils.concatTables(events, eventEvents)
+  end
 
   -- Group by `group`
   for _, event in ipairs(events) do
-    local groupValue = event[args['group']]
+    local groupValue = tostring(event[args['group']])
 
     if selectedFields[1] == '$count' then
       response[groupValue] = (response[groupValue] or 0) + 1
@@ -96,7 +104,12 @@ else
       response = #events
     end
   else
-    response = eventHelpers.findEventsByIds(prefix, allIds, selectedFields, where)
+    response = {}
+    for eventName, ids in pairs(idsByEvent) do
+      local events = eventHelpers.findEventsByIds(prefix, ids, selectedFields, where)
+      utils.fixFieldTypes(events, fieldTypes[eventName])
+      utils.concatTables(response, events)
+    end
   end
 
 end

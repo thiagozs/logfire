@@ -148,6 +148,64 @@ describe('GET /query', function () {
     });
   });
 
+  describe('value types', function() {
+    describe('without grouping', function() {
+      it('should return numeric values as numbers', function() {
+        return supertest(logfire.server.server)
+          .post('/query')
+          .send({
+            events: ['video.success']
+          })
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .then(function (res) {
+            var body = res.body;
+            body[0].$id.should.be.a.Number;
+            body[0].$date.should.be.a.Number;
+            body[0].server.should.be.a.Number;
+          });
+      });
+    });
+
+    describe('when grouping by event name', function() {
+      it('should return numeric values as numbers', function() {
+        return supertest(logfire.server.server)
+          .post('/query')
+          .send({
+            events: ['video.success'],
+            group: '$event'
+          })
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .then(function (res) {
+            var body = res.body;
+            body['video.success'][0].$id.should.be.a.Number;
+            body['video.success'][0].$date.should.be.a.Number;
+            body['video.success'][0].server.should.be.a.Number;
+          });
+      });
+    });
+
+    describe('when grouping by field', function() {
+      it('should return numeric values as numbers', function() {
+        return supertest(logfire.server.server)
+          .post('/query')
+          .send({
+            events: ['video.success'],
+            group: 'server'
+          })
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .then(function (res) {
+            var body = res.body;
+            body['1'][0].$id.should.be.a.Number;
+            body['1'][0].$date.should.be.a.Number;
+            body['1'][0].server.should.be.a.Number;
+          });
+      });
+    });
+  });
+
   describe('with `start` given', function() {
     it('should only return events created after `start`', function() {
       return supertest(logfire.server.server)
@@ -626,7 +684,7 @@ describe('GET /query', function () {
             .then(function (res) {
               var body = res.body;
               body.length.should.equal(minutes * successPerMinute / 2);
-              body[0].server.should.equal('2');
+              body[0].server.should.equal(2);
             });
         });
       });
@@ -648,7 +706,7 @@ describe('GET /query', function () {
             .then(function (res) {
               var body = res.body;
               body.length.should.equal(minutes * successPerMinute / 2);
-              body[0].server.should.equal('2');
+              body[0].server.should.equal(2);
             });
         });
       });
@@ -670,7 +728,7 @@ describe('GET /query', function () {
             .then(function (res) {
               var body = res.body;
               body.length.should.equal(minutes * successPerMinute / 2);
-              body[0].server.should.equal('2');
+              body[0].server.should.equal(2);
             });
         });
       });
@@ -692,7 +750,7 @@ describe('GET /query', function () {
             .then(function (res) {
               var body = res.body;
               body.length.should.equal(minutes * successPerMinute / 2);
-              body[0].server.should.equal('1');
+              body[0].server.should.equal(1);
             });
         });
       });
@@ -714,7 +772,7 @@ describe('GET /query', function () {
             .then(function (res) {
               var body = res.body;
               body.length.should.equal(minutes * successPerMinute / 2);
-              body[0].server.should.equal('1');
+              body[0].server.should.equal(1);
             });
         });
       });
@@ -736,7 +794,7 @@ describe('GET /query', function () {
             .then(function (res) {
               var body = res.body;
               body.length.should.equal(minutes * successPerMinute / 2);
-              body[0].server.should.equal('1');
+              body[0].server.should.equal(1);
             });
         });
       });
@@ -758,7 +816,7 @@ describe('GET /query', function () {
             .then(function (res) {
               var body = res.body;
               body.length.should.equal(minutes * successPerMinute / 2);
-              body[0].server.should.equal('2');
+              body[0].server.should.equal(2);
             });
         });
       });

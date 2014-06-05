@@ -16,8 +16,7 @@
 TODOs
 -----
 
-* Get rid of `autoload.js`
-* Make sure that numeric fields are returned as integers
+* Add `limit`
 * Benchmarks, performance improvements
 * Event TTL
 * Documentation
