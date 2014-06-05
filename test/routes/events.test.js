@@ -4,7 +4,7 @@ var supertest = require('supertest-as-promised');
 var helpers = require('../test-helpers');
 var should = require('should');
 
-describe.only('/events', function() {
+describe('/events', function() {
   var logfire = null;
   var server = null;
   before(function () {
