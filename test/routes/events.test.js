@@ -181,7 +181,8 @@ describe('/events', function() {
             }
           })
           .expect(JSON.stringify({
-            success: true
+            success: true,
+            $id: 1
           }))
           .expect(200, done);
       });

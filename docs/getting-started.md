@@ -94,9 +94,9 @@ Logfire provides an HTTP API for creating events. You don't need to do raw HTTP 
 
 ```bash
 $ curl -d '{"category": "cache", "event": "hit", "data": { "file_type": "html", "file_name": "foobar.html" }}' -H "Content-Type: application/json" http://localhost:8085/events
-# Result: {"success":true}
+# Result: {"success":true, "$id": 1}
 $ curl -d '{"category": "cache", "event": "miss", "data": { "file_type": "html", "file_name": "foobar.html" }}' -H "Content-Type: application/json" http://localhost:8085/events
-# Result: {"success":true}
+# Result: {"success":true, "$id": 2}
 ```
 
 ## Querying events

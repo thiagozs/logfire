@@ -23,8 +23,8 @@ module.exports = {
    */
   create: function (logfire, req, res) {
     return Promise.try(logfire.store.events.create, [req.body], logfire.store.events)
-      .then(function () {
-        res.json({ success: true });
+      .then(function (id) {
+        res.json({ success: true, $id: id });
       });
   }
 };
