@@ -589,7 +589,7 @@ describe('GET /query', function () {
       });
     });
 
-    describe.only('when checking for equality', function() {
+    describe('when checking for equality', function() {
       it('should only return the events that match the condition', function() {
         return supertest(logfire.server.server)
           .post('/query')
