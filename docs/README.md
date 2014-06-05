@@ -19,7 +19,7 @@ Options:
 
 ## Configuration
 
-The configuration file (logfire.json) contains information on how to connect to your redis store and on the events that you would like to store.
+The configuration file (logfire.json) contains information on how to connect to your redis store and on the structure of the events that you would like to store.
 
 ### Redis
 
