@@ -48,9 +48,17 @@ describe('TTLService', function () {
     var seed = function(eventName) {
       var tasks = [];
       var now = Math.round(new Date() / 1000);
+
+      // Create 10 in the futue, 10 in the past
       for(var minute = 0; minute < 20; minute++) {
+        var date = now + minute * 60;
+        if (minute >= 10) {
+          // Move the oldest 10 events further to the past to
+          // avoid race conditions
+          date = now - minute * 60 * 2;
+        }
         var event = {
-          category: 'cache', event: eventName, data: { $date: now - minute * 60 }
+          category: 'cache', event: eventName, data: { $date: date }
         };
         tasks.push(
           Promise.try(logfire.store.events.create, [event], logfire.store.events)
@@ -79,7 +87,28 @@ describe('TTLService', function () {
               .catch(function (err) {
                 reject(err);
               });
-          }, 2100);
+          }, 1100);
+        });
+      });
+
+      it('should remove events from indexes and sets', function() {
+        this.timeout(4000);
+        return new Promise(function (resolve, reject) {
+          setTimeout(function () {
+            Promise.all([
+              logfire.store.redis.scardAsync('logfire:set:cache.hit'),
+              logfire.store.redis.zcardAsync('logfire:indexes:cache.hit:$date'),
+              logfire.store.redis.zcardAsync('logfire:indexes:cache.hit:$id')
+            ]).then(function (results) {
+              results[0].should.equal(10);
+              results[1].should.equal(10);
+              results[2].should.equal(10);
+
+              resolve();
+            }).catch(function (err) {
+              reject(err);
+            });
+          }, 1100);
         });
       });
     });
@@ -104,7 +133,7 @@ describe('TTLService', function () {
               .catch(function (err) {
                 reject(err);
               });
-          }, 2100);
+          }, 1100);
         });
       });
     });

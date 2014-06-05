@@ -13,7 +13,6 @@ local zsetKey = prefix .. 'indexes:' .. event .. ':$date'
 
 -- Fetch ids
 local ids = redis.call('zrangebyscore', zsetKey, minValue, maxValue)
-redis.log(redis.LOG_NOTICE, cjson.encode(ids))
 
 -- Delete events
 for _, id in ipairs(ids) do
