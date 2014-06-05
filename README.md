@@ -25,10 +25,3 @@
 * [API Documentation](/docs/api.md)
 * [Querying and Query Operators](/docs/querying.md)
 * [Logfire clients](/docs/clients.md)
-
-TODOs
------
-
-* Add $event to event hash so we don't need an additional case in lua
-* Performance improvements
-* Documentation
