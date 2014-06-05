@@ -17,6 +17,8 @@ TODOs
 -----
 
 * `filter` / `where`
+* Replace Q with Bluebird
+* Replace optimist with minimist (optimist not maintained anymore)
 * Benchmarks, performance improvements
 * Event TTL
 * Documentation
