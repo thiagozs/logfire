@@ -8,14 +8,16 @@ describe('POST /events', function () {
   var logfire = null;
   var server = null;
   before(function () {
-    return helpers.initLogfire()
+    return helpers.initLogfire({
+      disable_flush: true
+    })
       .then(function (l) {
         logfire = l;
         server = logfire.server.server;
       });
   });
   after(function () {
-    server.close();
+    logfire.close();
   });
   beforeEach(function () {
     return logfire.store.reset();

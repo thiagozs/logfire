@@ -16,6 +16,5 @@
 TODOs
 -----
 
-* Event TTL
 * Performance improvements
 * Documentation

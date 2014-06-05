@@ -6,6 +6,8 @@
     "auth": ""
   },
 
+  "ttl_flush_interval": 1,
+
   "categories": {
     "video": {
       "events": {
@@ -46,7 +48,9 @@
     },
     "cache": {
       "events": {
-        "hit": {},
+        "hit": {
+          "ttl": 600
+        },
         "miss": {}
       }
     }

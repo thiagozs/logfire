@@ -4,9 +4,9 @@
   "description": "Event logging and statistics server",
   "main": "lib/logfire.js",
   "scripts": {
-    "test": "NODE_ENV=test node_modules/.bin/mocha --require should --reporter spec test/**/*.test.js",
+    "test": "NODE_ENV=test node_modules/.bin/mocha --require should --reporter spec test/*.test.js test/**/*.test.js",
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | node_modules/.bin/coveralls && rm -rf ./coverage",
-    "coverage": "NODE_ENV=test node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -R spec test/**/*.test.js"
+    "coverage": "NODE_ENV=test node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -R spec test/*.test.js test/**/*.test.js"
   },
   "bin": {
     "logfire": "./bin/logfire.js"
@@ -28,13 +28,14 @@
   },
   "homepage": "https://github.com/logfirejs/logfire",
   "devDependencies": {
-    "mocha": "~1.20.0",
-    "supertest": "~0.13.0",
-    "should": "~4.0.0",
-    "supertest-as-promised": "~0.1.1",
-    "istanbul": "~0.2.10",
     "coveralls": "~2.10.0",
-    "mocha-lcov-reporter": "0.0.1"
+    "istanbul": "~0.2.10",
+    "mocha": "~1.20.0",
+    "mocha-lcov-reporter": "0.0.1",
+    "should": "~4.0.0",
+    "sinon": "^1.10.2",
+    "supertest": "~0.13.0",
+    "supertest-as-promised": "~0.1.1"
   },
   "dependencies": {
     "bluebird": "^2.0.2",
