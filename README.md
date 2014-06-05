@@ -13,6 +13,12 @@
   </a>
 </p>
 
+<p align="center">An event logging and querying server using node.js, redis and lua</p>
+
+## Documentation
+
+For a getting started guide, see the [documentation page](/docs/README.md).
+
 TODOs
 -----
 
