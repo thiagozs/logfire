@@ -21,7 +21,7 @@ TestHelpers.initLogfire = function() {
 };
 
 before(function() {
-  Log.setLevel('warn');
+  Log.setLevel('debug');
 });
 
 module.exports = TestHelpers;
