@@ -19,6 +19,7 @@ TODOs
 * `filter` / `where`
 * Replace Q with Bluebird
 * Replace optimist with minimist (optimist not maintained anymore)
+* Make sure that numeric fields are returned as integers
 * Benchmarks, performance improvements
 * Event TTL
 * Documentation
