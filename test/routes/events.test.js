@@ -161,7 +161,7 @@ describe('POST /events', function () {
         .expect(200)
         .then(function () {
           var redis = logfire.store.redis;
-          return Q.ninvoke(redis, 'hgetall', 'logfire:events:1');
+          return redis.hgetallAsync('logfire:events:1');
         })
         .then(function (result) {
           should.exist(result);
@@ -183,9 +183,9 @@ describe('POST /events', function () {
         .expect(200)
         .then(function () {
           var redis = logfire.store.redis;
-          return Q.all([
-            Q.ninvoke(redis, 'zrangebyscore', 'logfire:indexes:video.success:$date', '-inf', '+inf', 'withscores'),
-            Q.ninvoke(redis, 'zrangebyscore', 'logfire:indexes:video.success:server', '-inf', '+inf', 'withscores')
+          return Promise.all([
+            redis.zrangebyscoreAsync('logfire:indexes:video.success:$date', '-inf', '+inf', 'withscores'),
+            redis.zrangebyscoreAsync('logfire:indexes:video.success:server', '-inf', '+inf', 'withscores')
           ]);
         })
         .then(function (results) {

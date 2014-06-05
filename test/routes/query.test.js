@@ -51,7 +51,7 @@ describe('GET /query', function () {
             server: server
           }
         };
-        tasks.push(Q.invoke(logfire.store.events, 'create', event));
+        tasks.push(Promise.try(logfire.store.events.create, [event], logfire.store.events));
       }
 
       for (i = 0; i < errorPerMinute; i++) {
@@ -64,11 +64,11 @@ describe('GET /query', function () {
             server: server
           }
         };
-        tasks.push(Q.invoke(logfire.store.events, 'create', event));
+        tasks.push(Promise.try(logfire.store.events.create, [event], logfire.store.events));
       }
     }
     Log.i('tests', 'Seeding...');
-    return Q.all(tasks);
+    return Promise.all(tasks);
   });
 
   describe('finding all events', function() {

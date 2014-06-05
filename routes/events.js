@@ -9,7 +9,7 @@ module.exports = {
    * @param  {ServerResponse} res
    */
   create: function (logfire, req, res) {
-    return Q.invoke(logfire.store.events, 'create', req.body)
+    return Promise.try(logfire.store.events.create, [req.body], logfire.store.events)
       .then(function () {
         res.json({ success: true });
       });

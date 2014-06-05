@@ -9,7 +9,7 @@ module.exports = {
    * @param  {ServerResponse} res
    */
   query: function (logfire, req, res) {
-    return Q.invoke(logfire.store.query, 'query', req.body)
+    return Promise.try(logfire.store.query.query, [req.body], logfire.store.query)
       .then(function (response) {
         res.setHeader('Content-Type', 'application/json');
         res.end(response);
