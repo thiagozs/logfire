@@ -697,7 +697,7 @@ describe('GET /query', function () {
         });
       });
 
-      describe('$lt', function() {
+      describe('$lte', function() {
         it('should only return the events that match the condition', function() {
           return supertest(logfire.server.server)
             .post('/query')
