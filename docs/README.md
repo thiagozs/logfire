@@ -86,6 +86,8 @@ Events can also hold additional fields. Let's add some:
 }
 ```
 
+> :exclamation: There are more options for events and event fields. To learn more about the available options, see the [API documentation](api.md).
+
 ## Creating events
 
 logfire provides an HTTP API for creating events. You don't need to do raw HTTP requests, there are [clients](clients.md) for several programming languages and frameworks. I'm just using curl here to demonstrate how the API works:
@@ -106,4 +108,4 @@ $ curl -d '{"events": ["cache.hit", "cache.miss"]}' -H "Content-Type: applicatio
 # Result: [{"$date":1401998427,"file_name":"foobar.html","$id":1,"file_type":"html"},{"$date":1401998444,"file_name":"foobar.html","$id":2,"file_type":"html"}]
 ```
 
-The querying API provides much more options. To learn more about the available options, see the [API documentation](api.md).
+> :exclamation: The querying API provides much more options. To learn more about the available options, see the [API documentation](api.md).
