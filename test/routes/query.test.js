@@ -148,6 +148,28 @@ describe('GET /query', function () {
     });
   });
 
+  describe('input validation', function() {
+    describe('when events is not an array', function() {
+      it('should return an error');
+    });
+
+    describe('when group is not a string (e.g. an array)', function() {
+      it('should return an error');
+    });
+
+    describe('when start is not a number', function() {
+      it('should return an error');
+    });
+
+    describe('when end is not a number', function() {
+      it('should return an error');
+    });
+
+    describe('when select is not an array', function() {
+      it('should return an error');
+    });
+  });
+
   describe('value types', function() {
     describe('without grouping', function() {
       it('should return numeric values as numbers', function() {
@@ -420,6 +442,22 @@ describe('GET /query', function () {
             });
         });
       });
+
+      describe('when grouping a non-timestamp field with group size', function() {
+        it('should group the event counts by the event name', function() {
+          return supertest(logfire.server.server)
+            .post('/query')
+            .send({
+              events: ['video.success', 'video.error'],
+              group: '$id[minute]'
+            })
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .expect(JSON.stringify({
+              error: 'The field "$id" must be of type "timestamp" to be able to group by a time frame.'
+            }));
+        });
+      });
     });
 
     describe('$date', function() {
@@ -440,6 +478,28 @@ describe('GET /query', function () {
               body[0].date.should.exist;
               body[0].events.length.should.equal(3);
             });
+        });
+      });
+
+      describe('in combination with select=$count', function() {
+        describe('$date[minute]', function() {
+          it('should return the count for each minute', function() {
+            return supertest(logfire.server.server)
+              .post('/query')
+              .send({
+                events: ['video.success'],
+                group: '$date[minute]',
+                start: date - 119 * 60,
+                select: ['$count']
+              })
+              .expect('Content-Type', /json/)
+              .expect(200)
+              .then(function (res) {
+                var body = res.body;
+                body.length.should.equal(120);
+                body[0].events.should.equal(3);
+              });
+          });
         });
       });
     });

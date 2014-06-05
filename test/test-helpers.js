@@ -20,4 +20,8 @@ TestHelpers.initLogfire = function() {
     });
 };
 
+before(function() {
+  Log.setLevel('warn');
+});
+
 module.exports = TestHelpers;
