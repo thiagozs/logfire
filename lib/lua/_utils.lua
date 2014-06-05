@@ -71,6 +71,16 @@ function utils.copyTable(tbl)
   return newTable
 end
 
+-- Returns a shallow copy of the given table with all
+-- its values casted to string
+function utils.stringifyTableValues(tbl)
+  local newTable = {}
+  for _, value in ipairs(tbl) do
+    table.insert(newTable, tostring(value))
+  end
+  return newTable
+end
+
 -- Return a decode representation of the given value (if not nil)
 function utils.decode(value)
   if not value then

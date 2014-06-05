@@ -589,22 +589,178 @@ describe('GET /query', function () {
       });
     });
 
-    describe('when checking for equality', function() {
-      it('should only return the events that match the condition', function() {
-        return supertest(logfire.server.server)
-          .post('/query')
-          .send({
-            events: ['video.success'],
-            where: {
-              server: 1
-            }
-          })
-          .expect('Content-Type', /json/)
-          .expect(200)
-          .then(function (res) {
-            var body = res.body;
-            body.length.should.equal(minutes * successPerMinute / 2);
-          });
+    describe('comparison', function() {
+      describe('==', function() {
+        it('should only return the events that match the condition', function() {
+          return supertest(logfire.server.server)
+            .post('/query')
+            .send({
+              events: ['video.success'],
+              where: {
+                server: 1
+              }
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(function (res) {
+              var body = res.body;
+              body.length.should.equal(minutes * successPerMinute / 2);
+            });
+        });
+      });
+
+      describe('$ne', function() {
+        it('should only return the events that match the condition', function() {
+          return supertest(logfire.server.server)
+            .post('/query')
+            .send({
+              events: ['video.success'],
+              where: {
+                server: {
+                  $ne: 1
+                }
+              }
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(function (res) {
+              var body = res.body;
+              body.length.should.equal(minutes * successPerMinute / 2);
+              body[0].server.should.equal('2');
+            });
+        });
+      });
+
+      describe('$gt', function() {
+        it('should only return the events that match the condition', function() {
+          return supertest(logfire.server.server)
+            .post('/query')
+            .send({
+              events: ['video.success'],
+              where: {
+                server: {
+                  $gt: 1
+                }
+              }
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(function (res) {
+              var body = res.body;
+              body.length.should.equal(minutes * successPerMinute / 2);
+              body[0].server.should.equal('2');
+            });
+        });
+      });
+
+      describe('$gte', function() {
+        it('should only return the events that match the condition', function() {
+          return supertest(logfire.server.server)
+            .post('/query')
+            .send({
+              events: ['video.success'],
+              where: {
+                server: {
+                  $gte: 2
+                }
+              }
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(function (res) {
+              var body = res.body;
+              body.length.should.equal(minutes * successPerMinute / 2);
+              body[0].server.should.equal('2');
+            });
+        });
+      });
+
+      describe('$lt', function() {
+        it('should only return the events that match the condition', function() {
+          return supertest(logfire.server.server)
+            .post('/query')
+            .send({
+              events: ['video.success'],
+              where: {
+                server: {
+                  $lt: 2
+                }
+              }
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(function (res) {
+              var body = res.body;
+              body.length.should.equal(minutes * successPerMinute / 2);
+              body[0].server.should.equal('1');
+            });
+        });
+      });
+
+      describe('$lt', function() {
+        it('should only return the events that match the condition', function() {
+          return supertest(logfire.server.server)
+            .post('/query')
+            .send({
+              events: ['video.success'],
+              where: {
+                server: {
+                  $lte: 1
+                }
+              }
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(function (res) {
+              var body = res.body;
+              body.length.should.equal(minutes * successPerMinute / 2);
+              body[0].server.should.equal('1');
+            });
+        });
+      });
+
+      describe('$in', function() {
+        it('should only return the events that match the condition', function() {
+          return supertest(logfire.server.server)
+            .post('/query')
+            .send({
+              events: ['video.success'],
+              where: {
+                server: {
+                  $in: [1]
+                }
+              }
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(function (res) {
+              var body = res.body;
+              body.length.should.equal(minutes * successPerMinute / 2);
+              body[0].server.should.equal('1');
+            });
+        });
+      });
+
+      describe('$nin', function() {
+        it('should only return the events that match the condition', function() {
+          return supertest(logfire.server.server)
+            .post('/query')
+            .send({
+              events: ['video.success'],
+              where: {
+                server: {
+                  $nin: [1]
+                }
+              }
+            })
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(function (res) {
+              var body = res.body;
+              body.length.should.equal(minutes * successPerMinute / 2);
+              body[0].server.should.equal('2');
+            });
+        });
       });
     });
   });

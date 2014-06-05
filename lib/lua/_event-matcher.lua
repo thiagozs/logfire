@@ -23,21 +23,29 @@ function eventMatcher.matchesWhere(event, where)
       -- Iterate over all condition operators and validate
       for operator, value in pairs(condition) do
         -- Todo: Identity check
-        value = tostring(value)
+        local numericEventValue = tonumber(eventValue)
+        local stringConditionValue = tostring(value)
 
-        -- Numeric and universal operators
-        if (operator == '$ne' and eventValue == value) or
-          (operator == '$gt' and eventValue <= value) or
-          (operator == '$gte' and eventValue < value) or
-          (operator == '$lt' and eventValue >= value) or
-          (operator == '$lte' and eventValue > value) then
+        -- Numeric operators
+        if (operator == '$gt' and numericEventValue <= value) or
+          (operator == '$gte' and numericEventValue < value) or
+          (operator == '$lt' and numericEventValue >= value) or
+          (operator == '$lte' and numericEventValue > value) then
             return false
         end
 
+        -- Universal operators
+        if (operator == '$ne' and eventValue == stringConditionValue) then
+          return false
+        end
+
         -- Array operators
-        if (operator == '$in' and not utils.tableContains(value, eventValue)) or
-          (operator == '$nin' and utils.tableContains(value, eventValue)) then
-            return false
+        if utils.tableContains({'$in', '$nin'}, operator) then
+          local stringValue = utils.stringifyTableValues(value)
+          if (operator == '$in' and not utils.tableContains(stringValue, eventValue)) or
+            (operator == '$nin' and utils.tableContains(stringValue, eventValue)) then
+              return false
+          end
         end
       end
 
