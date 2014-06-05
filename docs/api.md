@@ -4,25 +4,25 @@
 
 ### Category
 
-| Key          | Value type | Available values          | Default        |
-| ------------ | ---------- | ------------------------- | -------------- |
-| `events`     | Object     | See `Event`               | `{}`           |
+| Key | Value type | Available values | Default |
+| --- | --- | --- | --- |
+| `events` | Object | See `Event`. Key is the event name. | `{}` |
 
 ### Event
 
-| Key          | Value type | Available values          | Default        |
-| ------------ | ---------- | ------------------------- | -------------- |
-| `fields`     | Object     | See `Event fields`        | `{}`           |
-| `ttl`        | Number     | Any number (seconds)      | `0` (infinite) |
+| Key | Value type | Available values | Default |
+| --- | --- | --- | --- |
+| `fields` | Object | See `Event fields` | `{}` |
+| `ttl` | Number | Any number (seconds) | `0` (infinite) |
 
 ### Event fields
 
 Events have a couple of default fields: `$id`, `$date` and `$event`
 
-| Key          | Value type | Available values          | Default        |
-| ------------ | ---------- | ------------------------- | -------------- |
-| `type`       | String     | string, number, timestamp | `string`       |
-| `required`   | Boolean    | true, false               | `false`        |
+| Key | Value type | Available values | Default |
+| --- | --- | --- | --- |
+| `type` | String | string, number, timestamp | `string` |
+| `required` | Boolean | true, false | `false` |
 
 
 ## HTTP API
