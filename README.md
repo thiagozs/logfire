@@ -16,7 +16,6 @@
 TODOs
 -----
 
-* Replace optimist with minimist (optimist not maintained anymore)
 * Get rid of `autoload.js`
 * Make sure that numeric fields are returned as integers
 * Benchmarks, performance improvements
