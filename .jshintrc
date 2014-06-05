@@ -1,6 +1,5 @@
 {
   "globals"   : {
-    /* mocha */
     "describe" : false,
     "it" : false,
     "before" : false,
@@ -8,14 +7,13 @@
     "after" : false,
     "afterEach" : false,
 
-    /* node + commonjs */
     "global" : false,
     "module" : false,
     "require" : false,
     "console" : false,
     "process" : false,
+    "__dirname" : false,
 
-    /* autoload.js globals */
     "Log" : false,
     "_" : false,
     "LogfireError" : false
