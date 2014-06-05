@@ -10,6 +10,7 @@ module.exports = function (map) {
    * Routes for `routes/events.js`
    */
   map.post('/events', 'events#create');
+  map.get('/events/:id', 'events#get');
 
   /**
    * Routes for `routes/query.js`
