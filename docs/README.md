@@ -96,3 +96,14 @@ $ curl -d '{"category": "cache", "event": "hit", "data": { "file_type": "html", 
 $ curl -d '{"category": "cache", "event": "miss", "data": { "file_type": "html", "file_name": "foobar.html" }}' -H "Content-Type: application/json" http://localhost:8085/events
 # Result: {"success":true}
 ```
+
+## Querying events
+
+logfire also provides an HTTP API for querying events:
+
+```bash
+$ curl -d '{"events": ["cache.hit", "cache.miss"]}' -H "Content-Type: application/json" http://localhost:8085/query
+# Result: [{"$date":1401998427,"file_name":"foobar.html","$id":1,"file_type":"html"},{"$date":1401998444,"file_name":"foobar.html","$id":2,"file_type":"html"}]
+```
+
+The querying API provides much more options. To learn more about the available options, see the [API documentation](api.md).
