@@ -11,8 +11,8 @@ Here are some examples on what is possible with logfire's querying engine:
 Query:
 ```json
 {
-  events: ['cache.hit', 'cache.miss'],
-  select: ['$count']
+  "events": ["cache.hit", "cache.miss"],
+  "select": ["$count"]
 }
 ```
 
@@ -26,9 +26,9 @@ Result:
 Query:
 ```json
 {
-  events: ['cache.hit', 'cache.miss'],
-  select: ['$count'],
-  group: '$event'
+  "events": ["cache.hit", "cache.miss"],
+  "select": ["$count"],
+  "group": "$event"
 }
 ```
 
@@ -45,9 +45,9 @@ Result:
 Query:
 ```json
 {
-  events: ['cache.miss'],
-  select: ['$count'],
-  group: 'file_type'
+  "events": ["cache.miss"],
+  "select": ["$count"],
+  "group": "file_type"
 }
 ```
 
@@ -65,9 +65,9 @@ Result:
 Query:
 ```json
 {
-  events: ['cache.miss'],
-  select: ['$count'],
-  group: '$date[minute]'
+  "events": ["cache.miss"],
+  "select": ["$count"],
+  "group": "$date[minute]"
 }
 ```
 
@@ -96,10 +96,10 @@ Result:
 Query:
 ```json
 {
-  events: ['cache.miss'],
-  select: ['$count'],
-  where: {
-    file_type: 'html'
+  "events": ["cache.miss"],
+  "select": ["$count"],
+  "where": {
+    "file_type": "html"
   }
 }
 ```
@@ -121,11 +121,11 @@ logfire supports the following search operators:
 Query:
 ```json
 {
-  events: ['cache.miss'],
-  select: ['$count'],
-  where: {
-    file_type: {
-      $ne: 'html'
+  "events": ["cache.miss"],
+  "select": ["$count"],
+  "where": {
+    "file_type": {
+      "$ne": "html"
     }
   }
 }
