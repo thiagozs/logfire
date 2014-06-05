@@ -2,6 +2,9 @@
   <img src="http://s14.directupload.net/images/140605/k3cy9975.png" />
 </p>
 <p align="center">
+  <a href="https://npm.im/logfire">
+    <img src="http://img.shields.io/npm/v/logfire.svg" alt="npm version" />
+  </a>
   <a href="https://travis-ci.org/logfirejs/logfire">
     <img src="http://img.shields.io/travis/logfirejs/logfire.svg" alt="Test Status" />
   </a>
