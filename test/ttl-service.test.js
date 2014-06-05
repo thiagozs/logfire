@@ -58,7 +58,7 @@ describe('TTLService', function () {
           date = now - minute * 60 * 2;
         }
         var event = {
-          category: 'cache', event: eventName, data: { $date: date }
+          event: 'cache.' + eventName, data: { $date: date }
         };
         tasks.push(
           Promise.try(logfire.store.events.create, [event], logfire.store.events)

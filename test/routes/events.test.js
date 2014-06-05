@@ -33,19 +33,7 @@ describe('POST /events', function () {
         .post('/events')
         .send({ event: 'success' })
         .expect(JSON.stringify({
-          error: '`category` is missing.'
-        }))
-        .expect(400, done);
-    });
-  });
-
-  describe('when event is missing', function () {
-    it('should return an error', function (done) {
-      supertest(server)
-        .post('/events')
-        .send({ category: 'video' })
-        .expect(JSON.stringify({
-          error: '`event` is missing.'
+          error: 'Invalid event format.'
         }))
         .expect(400, done);
     });
@@ -55,7 +43,7 @@ describe('POST /events', function () {
     it('should return an error', function (done) {
       supertest(server)
         .post('/events')
-        .send({ category: 'foobar', event: 'success' })
+        .send({ event: 'foobar.success' })
         .expect(JSON.stringify({
           error: 'Category "foobar" does not exist.'
         }))
@@ -67,7 +55,7 @@ describe('POST /events', function () {
     it('should return an error', function (done) {
       supertest(server)
         .post('/events')
-        .send({ category: 'video', event: 'foobar' })
+        .send({ event: 'video.foobar' })
         .expect(JSON.stringify({
           error: 'Event "video.foobar" does not exist.'
         }))
@@ -80,8 +68,7 @@ describe('POST /events', function () {
       supertest(server)
         .post('/events')
         .send({
-          category: 'video',
-          event: 'success',
+          event: 'video.success',
           data: {
             foobar: 'uwotm8'
           }
@@ -98,8 +85,7 @@ describe('POST /events', function () {
       supertest(server)
         .post('/events')
         .send({
-          category: 'video',
-          event: 'success',
+          event: 'video.success',
           data: {
             video_identifier: 'abcdefghijk'
           }
@@ -116,8 +102,7 @@ describe('POST /events', function () {
       supertest(server)
         .post('/events')
         .send({
-          category: 'video',
-          event: 'success',
+          event: 'video.success',
           data: {
             provider: 'youtube',
             video_identifier: 'abcdefghijk',
@@ -136,8 +121,7 @@ describe('POST /events', function () {
       supertest(server)
         .post('/events')
         .send({
-          category: 'video',
-          event: 'success',
+          event: 'video.success',
           data: {
             provider: 'youtube',
             video_identifier: 'abcdefghijk'
@@ -153,8 +137,7 @@ describe('POST /events', function () {
       return supertest(server)
         .post('/events')
         .send({
-          category: 'video',
-          event: 'success',
+          event: 'video.success',
           data: {
             provider: 'youtube',
             video_identifier: 'abcdefghijk'
@@ -174,8 +157,7 @@ describe('POST /events', function () {
       return supertest(server)
         .post('/events')
         .send({
-          category: 'video',
-          event: 'success',
+          event: 'video.success',
           data: {
             provider: 'youtube',
             video_identifier: 'abcdefghijk',

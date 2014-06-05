@@ -44,8 +44,7 @@ describe('GET /query', function () {
         }
 
         event = {
-          category: 'video',
-          event: 'success',
+          event: 'video.success',
           data: {
             provider: ['youtube', 'vimeo'][Math.floor(Math.random() * 2)],
             video_identifier: 'random',
@@ -58,8 +57,7 @@ describe('GET /query', function () {
 
       for (i = 0; i < errorPerMinute; i++) {
         event = {
-          category: 'video',
-          event: 'error',
+          event: 'video.error',
           data: {
             code: ['video_not_found', 'inappropriate_content'][Math.floor(Math.random() * 2)],
             $date: date - minute * 60,
