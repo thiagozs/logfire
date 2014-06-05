@@ -2,8 +2,8 @@ require "_utils"
 require "_event-helpers"
 local args = utils.getArgs()
 local prefix = args['prefix']
-local eventNames = utils.splitList(args['events'])
-local selectedFields = utils.splitList(args['select'])
+local eventNames = utils.decode(args['events'])
+local selectedFields = utils.decode(args['select'])
 local response = {}
 
 -- Find event ids for all events by (optional) range of $date

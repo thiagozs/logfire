@@ -55,6 +55,15 @@ function utils.uniqueTable(tbl)
   return uniqueTable
 end
 
+-- Return a decode representation of the given value (if not nil)
+function utils.decode(value)
+  if not value then
+    return {}
+  end
+
+  return cjson.decode(value)
+end
+
 -- Gets all fields from a hash as a dictionary
 function utils.hgetall(key)
   local bulk = redis.call('HGETALL', key)
