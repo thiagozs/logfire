@@ -24,5 +24,6 @@ For a getting started guide, see the [documentation page](/docs/README.md).
 TODOs
 -----
 
+* Add $event to event hash so we don't need an additional case in lua
 * Performance improvements
 * Documentation
