@@ -588,5 +588,24 @@ describe('GET /query', function () {
         });
       });
     });
+
+    describe.only('when checking for equality', function() {
+      it('should only return the events that match the condition', function() {
+        return supertest(logfire.server.server)
+          .post('/query')
+          .send({
+            events: ['video.success'],
+            where: {
+              server: 1
+            }
+          })
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .then(function (res) {
+            var body = res.body;
+            body.length.should.equal(minutes * successPerMinute / 2);
+          });
+      });
+    });
   });
 });

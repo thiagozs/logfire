@@ -1,9 +1,12 @@
 require "_utils"
+require "_event-matcher"
 require "_event-helpers"
+
 local args = utils.getArgs()
 local prefix = args['prefix']
 local eventNames = utils.decode(args['events'])
 local selectedFields = utils.decode(args['select'])
+local where = utils.decode(args['where'])
 local response = {}
 
 -- Find event ids for all events by (optional) range of $date
@@ -33,9 +36,14 @@ if args['group'] == '$event' then
     local groupValues
 
     if selectedFields[1] == '$count' then
-      groupValues = #ids
+      if #where == 0 then
+        groupValues = #ids
+      else
+        local events = eventHelpers.findEventsByIds(prefix, ids, selectedFields, where)
+        groupValues = #events
+      end
     else
-      groupValues = eventHelpers.findEventsByIds(prefix, ids, selectedFields)
+      groupValues = eventHelpers.findEventsByIds(prefix, ids, selectedFields, where)
     end
 
     response[eventName] = groupValues
@@ -51,7 +59,7 @@ elseif args['group'] then
   end
 
   -- Get all events
-  local events = eventHelpers.findEventsByIds(prefix, allIds, selectedFields)
+  local events = eventHelpers.findEventsByIds(prefix, allIds, selectedFields, where)
 
   -- Group by `group`
   for _, event in ipairs(events) do
@@ -81,9 +89,14 @@ else
   -- of events, just return the length of `allIds`. If `select`
   -- is not set to '$count', return all events.
   if selectedFields[1] == '$count' then
-    response = #allIds
+    if #where == 0 then
+      response = #allIds
+    else
+      local events = eventHelpers.findEventsByIds(prefix, allIds, selectedFields, where)
+      response = #events
+    end
   else
-    response = eventHelpers.findEventsByIds(prefix, allIds, selectedFields)
+    response = eventHelpers.findEventsByIds(prefix, allIds, selectedFields, where)
   end
 
 end

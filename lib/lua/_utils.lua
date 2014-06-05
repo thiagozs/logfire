@@ -39,20 +39,36 @@ function utils.tableContains(tbl, value)
   return tempDict[value]
 end
 
+-- Returns a dict (value => true) of the given table
+function utils.tableToDict(tbl)
+  local dict = {}
+  for _, value in ipairs(tbl) do
+    dict[value] = true
+  end
+  return dict
+end
+
+-- Returns a table of keys for the given dict
+function utils.dictToTable(dict)
+  local tbl = {}
+  for key, _ in pairs(dict) do
+    table.insert(tbl, key)
+  end
+  return tbl
+end
+
 -- Return a unique representation of the given table
 function utils.uniqueTable(tbl)
-  -- Convert to dict
-  local tempDict = {}
-  for _, value in ipairs(tbl) do
-    tempDict[value] = true
-  end
+  return utils.dictToTable(utils.tableToDict(tbl))
+end
 
-  -- Convert to table
-  local uniqueTable = {}
-  for key, _ in pairs(tempDict) do
-    table.insert(uniqueTable, key)
+-- Returns a shallow copy of the given tbale
+function utils.copyTable(tbl)
+  local newTable = {}
+  for _, value in ipairs(tbl) do
+    table.insert(newTable, value)
   end
-  return uniqueTable
+  return newTable
 end
 
 -- Return a decode representation of the given value (if not nil)
