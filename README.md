@@ -13,9 +13,11 @@
   </a>
 </p>
 
-<p align="center">An event logging and querying server using node.js, redis and lua</p>
+## Introduction
 
-## Documentation
+**logfire** is an event logging and querying server using redis, written in JavaScript (node.js) and lua. It provides a simple API for creating events and sophisticated querying capabilities.
+
+## Find out more about logfire
 
 For a getting started guide, see the [documentation page](/docs/README.md).
 
