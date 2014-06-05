@@ -18,8 +18,6 @@
 
 ## Introduction
 
-> :construction: Logfire is still under construction and not released on npm yet. I'm currently working on the documentation. Please come back later :)
-
 **logfire** is an event logging and querying server using redis, written in JavaScript (node.js) and lua. It provides a simple API for creating events and sophisticated querying capabilities.
 
 ## Find out more about logfire
