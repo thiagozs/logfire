@@ -38,7 +38,7 @@ Per default, logfire will try to connect to localhost:6379 without authenticatio
 
 ### Event structure
 
-To create new events, you have to define your event structure in the logfire.json. There are event categories and events. Let's define a `cache` category with two events: `hit` and `miss`.
+To be able to create new events, you will have to define your event structure in the logfire.json first. There are event categories and events. Let's define a `cache` category with two events: `hit` and `miss`.
 
 ```json
 {
