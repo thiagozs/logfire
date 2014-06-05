@@ -1,6 +1,6 @@
 # Querying and Query Operators
 
-The heart of logfire are its querying capabilities. With the `/query` route you can run 
+The heart of logfire are its querying capabilities. With the `/query` route you can run
 sophisticated queryies on your data set, including counting, grouping and filtering
 events.
 
@@ -111,8 +111,8 @@ Result:
 
 ## Filtering with conditions
 
-Every field in the `where` object can take an object with search operators as keys. 
-logfire supports the following search operators:
+Every field in the `where` object can take an object with query operators as keys.
+logfire supports the following query operators:
 
 ### `$ne`
 
@@ -134,4 +134,136 @@ Query:
 Result:
 ```json
 109
+```
+
+### `$gt`
+
+`$gt` selects the events where the value of the field is greater than the specified value. **Can only be used with numeric fields.**
+
+Query:
+```json
+{
+  "events": ["cache.miss"],
+  "select": ["$count"],
+  "where": {
+    "$id": {
+      "$gt": 100
+    }
+  }
+}
+```
+
+Result:
+```json
+1323
+```
+
+### `$gte`
+
+`$gte` selects the events where the value of the field is greater than or equal to the specified value. **Can only be used with numeric fields.**
+
+Query:
+```json
+{
+  "events": ["cache.miss"],
+  "select": ["$count"],
+  "where": {
+    "$id": {
+      "$gte": 100
+    }
+  }
+}
+```
+
+Result:
+```json
+1322
+```
+
+### `$lt`
+
+`$lt` selects the events where the value of the field is lower than the specified value. **Can only be used with numeric fields.**
+
+Query:
+```json
+{
+  "events": ["cache.miss"],
+  "select": ["$count"],
+  "where": {
+    "$id": {
+      "$lt": 100
+    }
+  }
+}
+```
+
+Result:
+```json
+99
+```
+
+### `$lte`
+
+`$lte` selects the events where the value of the field is lower than or equal to the specified value. **Can only be used with numeric fields.**
+
+Query:
+```json
+{
+  "events": ["cache.miss"],
+  "select": ["$count"],
+  "where": {
+    "$id": {
+      "$lte": 100
+    }
+  }
+}
+```
+
+Result:
+```json
+100
+```
+
+### `$in`
+
+`$in` selects the events where the value of the field is in the specified array. **Can only be used with numeric fields.**
+
+Query:
+```json
+{
+  "events": ["cache.miss"],
+  "select": ["$count"],
+  "where": {
+    "file_type": {
+      "$in": ["html", "png"]
+    }
+  }
+}
+```
+
+Result:
+```json
+178
+```
+
+### `$nin`
+
+`$nin` selects the events where the value of the field is not in the specified array. **Can only be used with numeric fields.**
+
+Query:
+```json
+{
+  "events": ["cache.miss"],
+  "select": ["$count"],
+  "where": {
+    "file_type": {
+      "$nin": ["html", "png"]
+    }
+  }
+}
+```
+
+Result:
+```json
+34
 ```

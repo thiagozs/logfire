@@ -21,7 +21,10 @@
 
 ## Find out more about logfire
 
-For a getting started guide, see the [documentation page](/docs/README.md).
+* [Getting Started](/docs/getting-started.md)
+* [API Documentation](/docs/api.md)
+* [Querying and Query Operators](/docs/querying.md)
+* [logfire clients](/docs/clients.md)
 
 TODOs
 -----
