@@ -1,4 +1,4 @@
-This page will guide you through the basic setup of logfire. If you would like to know more about logfire's API, see the [API documentation](api.md).
+This page will guide you through the basic setup of Logfire. If you would like to know more about logfire's API, see the [API documentation](api.md).
 
 ## Installation
 
@@ -23,7 +23,7 @@ The configuration file (logfire.json) contains information on how to connect to 
 
 ### Redis
 
-Per default, logfire will try to connect to localhost:6379 without authentication and it will use db index 0. You can change that by defining the information in your logfire.json:
+Per default, Logfire will try to connect to localhost:6379 without authentication and it will use db index 0. You can change that by defining the information in your logfire.json:
 
 ```json
 {
@@ -90,7 +90,7 @@ Events can also hold additional fields. Let's add some:
 
 ## Creating events
 
-logfire provides an HTTP API for creating events. You don't need to do raw HTTP requests, there are [clients](clients.md) for several programming languages and frameworks. I'm just using curl here to demonstrate how the API works:
+Logfire provides an HTTP API for creating events. You don't need to do raw HTTP requests, there are [clients](clients.md) for several programming languages and frameworks. I'm just using curl here to demonstrate how the API works:
 
 ```bash
 $ curl -d '{"category": "cache", "event": "hit", "data": { "file_type": "html", "file_name": "foobar.html" }}' -H "Content-Type: application/json" http://localhost:8085/events
@@ -101,11 +101,11 @@ $ curl -d '{"category": "cache", "event": "miss", "data": { "file_type": "html",
 
 ## Querying events
 
-logfire also provides an HTTP API for querying events:
+Logfire also provides an HTTP API for querying events:
 
 ```bash
 $ curl -d '{"events": ["cache.hit", "cache.miss"]}' -H "Content-Type: application/json" http://localhost:8085/query
 # Result: [{"$date":1401998427,"file_name":"foobar.html","$id":1,"file_type":"html"},{"$date":1401998444,"file_name":"foobar.html","$id":2,"file_type":"html"}]
 ```
 
-> :exclamation: The querying API provides much more options. To learn more about the available options, see the [API documentation](api.md).
+> :exclamation: The querying API provides much more options. To learn more about the available options, see the [API documentation](api.md). To see some examples, see the [Querying and Query Operators Page](querying.md).

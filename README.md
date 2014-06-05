@@ -24,7 +24,7 @@
 * [Getting Started](/docs/getting-started.md)
 * [API Documentation](/docs/api.md)
 * [Querying and Query Operators](/docs/querying.md)
-* [logfire clients](/docs/clients.md)
+* [Logfire clients](/docs/clients.md)
 
 TODOs
 -----

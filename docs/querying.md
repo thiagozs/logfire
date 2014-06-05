@@ -1,10 +1,10 @@
 # Querying and Query Operators
 
-The heart of logfire are its querying capabilities. With the `/query` route you can run
+The heart of Logfire are its querying capabilities. With the `/query` route you can run
 sophisticated queryies on your data set, including counting, grouping and filtering
 events.
 
-Here are some examples on what is possible with logfire's querying engine:
+Here are some examples on what is possible with Logfire's querying engine:
 
 ## Counting events
 
@@ -112,7 +112,7 @@ Result:
 ## Filtering with conditions
 
 Every field in the `where` object can take an object with query operators as keys.
-logfire supports the following query operators:
+Logfire supports the following query operators:
 
 ### `$ne`
 
