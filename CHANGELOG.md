@@ -2,7 +2,7 @@
 
 * Added GET /events/:id
 * POST /events takes `event` (Format: `{category}.{event}`) instead of `category` and `event`
-* POST /events returns $id
+* POST /events returns `$id`
 
 ## 0.0.1 (Jun 5 2014)
 
