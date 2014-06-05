@@ -38,10 +38,61 @@ Per default, logfire will try to connect to localhost:6379 without authenticatio
 
 ### Event structure
 
-To create new events, you have to define your event structure in the logfire.json. There are event categories and events, which have fields of specific types. Let's define `cache` category with two events: `hit` and `miss`.
+To create new events, you have to define your event structure in the logfire.json. There are event categories and events. Let's define a `cache` category with two events: `hit` and `miss`.
 
 ```json
 {
-  "redis": { /* your redis configuration goes here */ }
+  "categories": {
+    "cache": {
+      "events": {
+        "hit": {},
+        "miss": {}
+      }
+    }
+  }
 }
+```
+
+Events can also hold additional fields. Let's add some:
+
+```json
+{
+  "categories": {
+    "cache": {
+      "events": {
+        "hit": {
+          "fields": {
+            "file_name": {
+              "type": "string"
+            },
+            "file_type": {
+              "type": "string"
+            }
+          }
+        },
+        "miss": {
+          "fields": {
+            "file_name": {
+              "type": "string"
+            },
+            "file_type": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Creating events
+
+logfire provides an HTTP API for creating events. You don't need to do raw HTTP requests, there are [clients](clients.md) for several programming languages and frameworks. I'm just using curl here to demonstrate how the API works:
+
+```bash
+$ curl -d '{"category": "cache", "event": "hit", "data": { "file_type": "html", "file_name": "foobar.html" }}' -H "Content-Type: application/json" http://localhost:8085/events
+# Result: {"success":true}
+$ curl -d '{"category": "cache", "event": "miss", "data": { "file_type": "html", "file_name": "foobar.html" }}' -H "Content-Type: application/json" http://localhost:8085/events
+# Result: {"success":true}
 ```
