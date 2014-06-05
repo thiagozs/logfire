@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
+var path = require('path');
 var _ = require('underscore');
 
 // CLI
@@ -17,7 +18,8 @@ if (argv.help === true) return optimist.showHelp();
 
 // Pick allowed options
 var options = _.pick(argv, ['port']);
-options.config = argv._[0];
+var defaultConfigPath = path.resolve(process.cwd(), 'logfire.json');
+options.config = require(argv._[0] || defaultConfigPath);
 
 // Run logfire server
 var logfire = new Logfire(options);
