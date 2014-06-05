@@ -16,7 +16,6 @@
 TODOs
 -----
 
-* Add `limit`
-* Benchmarks, performance improvements
 * Event TTL
+* Performance improvements
 * Documentation
