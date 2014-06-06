@@ -21,6 +21,16 @@ Options:
 
 The configuration file (logfire.json) contains information on how to connect to your redis store and on the structure of the events that you would like to store.
 
+### Logfire port
+
+Per default, Logfire will run on port `8085`. You can override the port in your logfire.json:
+
+```json
+{
+  "port": 8088
+}
+```
+
 ### Redis
 
 Per default, Logfire will try to connect to localhost:6379 without authentication and it will use db index 0. You can change that by defining the information in your logfire.json:

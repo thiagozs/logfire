@@ -2,12 +2,10 @@
 'use strict';
 
 var path = require('path');
-var _ = require('underscore');
 
 // CLI
 var optimist = require('optimist')
-  .usage('\n  Usage: logfire [/path/to/logfire.json] [options]')
-  .default('port', 8085);
+  .usage('\n  Usage: logfire [/path/to/logfire.json] [options]');
 var argv = optimist.argv;
 
 // Logfire
@@ -17,8 +15,8 @@ var Logfire = require('../lib/logfire');
 if (argv.help === true) return optimist.showHelp();
 
 // Pick allowed options
-var options = _.pick(argv, ['port']);
 var defaultConfigPath = path.resolve(process.cwd(), 'logfire.json');
+var options = {};
 options.config = require(argv._[0] || defaultConfigPath);
 
 // Run logfire server

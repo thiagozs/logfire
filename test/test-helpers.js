@@ -18,7 +18,6 @@ TestHelpers.initLogfire = function(additionalConfig) {
   config = _.extend(config, additionalConfig);
 
   var logfire = new Logfire({
-    port: 8088,
     config: config
   });
   return logfire.run()
