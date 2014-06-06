@@ -80,18 +80,6 @@ describe('/events', function() {
      * Validations
      */
 
-    describe('when event format is invalid', function () {
-      it('should return an error', function (done) {
-        supertest(server)
-          .post('/events')
-          .send({ event: 'success' })
-          .expect(JSON.stringify({
-            error: 'Invalid event format.'
-          }))
-          .expect(400, done);
-      });
-    });
-
     describe('when event is unknown', function () {
       it('should return an error', function (done) {
         supertest(server)
