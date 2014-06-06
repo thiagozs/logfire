@@ -1,74 +1,86 @@
 {
   "get_all_group_by_event": [
     {
-      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
-      "average": 1491
+      "revision": "3890ae29632223d8d17f4a1d6dd363f3fc6f4bdc",
+      "average": 1162
     }
   ],
   "count_all_group_by_date_minutes": [
     {
-      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
-      "average": 885
+      "revision": "3890ae29632223d8d17f4a1d6dd363f3fc6f4bdc",
+      "average": 735
     }
   ],
   "get_all_group_by_date_minutes": [
     {
-      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
-      "average": 1492
+      "revision": "3890ae29632223d8d17f4a1d6dd363f3fc6f4bdc",
+      "average": 1267
     }
   ],
   "count_all_group_by_date_days": [
     {
-      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
-      "average": 894
+      "revision": "3890ae29632223d8d17f4a1d6dd363f3fc6f4bdc",
+      "average": 753
     }
   ],
   "get_all_group_by_date_days": [
     {
-      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
-      "average": 1496
+      "revision": "3890ae29632223d8d17f4a1d6dd363f3fc6f4bdc",
+      "average": 1246
     }
   ],
   "count_all_group_by_date_months": [
     {
-      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
-      "average": 898
+      "revision": "3890ae29632223d8d17f4a1d6dd363f3fc6f4bdc",
+      "average": 753
     }
   ],
   "get_all_group_by_date_months": [
     {
-      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
-      "average": 1488
+      "revision": "3890ae29632223d8d17f4a1d6dd363f3fc6f4bdc",
+      "average": 1245
     }
   ],
   "count_all_group_by_indexed_string_field": [
     {
-      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
-      "average": 857
+      "revision": "3890ae29632223d8d17f4a1d6dd363f3fc6f4bdc",
+      "average": 735
     }
   ],
   "get_all_group_by_indexed_string_field": [
     {
-      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
-      "average": 1547
+      "revision": "3890ae29632223d8d17f4a1d6dd363f3fc6f4bdc",
+      "average": 1228
+    }
+  ],
+  "count_all_group_by_numeric_field": [
+    {
+      "revision": "3890ae29632223d8d17f4a1d6dd363f3fc6f4bdc",
+      "average": 736
     }
   ],
   "count_all_group_by_unindexed_string_field": [
     {
-      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
-      "average": 1027
+      "revision": "3890ae29632223d8d17f4a1d6dd363f3fc6f4bdc",
+      "average": 697
     }
   ],
   "count_all_group_by_event": [
     {
-      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
-      "average": 145
+      "revision": "3890ae29632223d8d17f4a1d6dd363f3fc6f4bdc",
+      "average": 104
+    }
+  ],
+  "get_all_group_by_numeric_field": [
+    {
+      "revision": "3890ae29632223d8d17f4a1d6dd363f3fc6f4bdc",
+      "average": 1208
     }
   ],
   "get_all_group_by_unindexed_string_field": [
     {
-      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
-      "average": 1890
+      "revision": "3890ae29632223d8d17f4a1d6dd363f3fc6f4bdc",
+      "average": 1241
     }
   ]
 }

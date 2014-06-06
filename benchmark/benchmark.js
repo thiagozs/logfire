@@ -13,7 +13,7 @@ var eventCount = 50000;
 var events = ['event1', 'event2', 'event3'];
 var field1 = ['value1', 'value2', 'value3'];
 var field2 = ['value1', 'value2', 'value3'];
-var field3 = ['value1', 'value2', 'value3'];
+var field3 = [1, 2, 3];
 
 function Benchmark() {
   // Init server
@@ -133,6 +133,12 @@ Benchmark.prototype._benchmark = function() {
         group: 'field1'
       });
     },
+    'get_all_group_by_numeric_field': function() {
+      return self.logfire.store.query.query({
+        events: ['event1', 'event2', 'event3'],
+        group: 'field3'
+      });
+    },
 
     // Count events
     'count_all_group_by_event': function() {
@@ -146,6 +152,13 @@ Benchmark.prototype._benchmark = function() {
       return self.logfire.store.query.query({
         events: ['event1', 'event2', 'event3'],
         group: 'field1',
+        select: ['$count']
+      });
+    },
+    'count_all_group_by_numeric_field': function() {
+      return self.logfire.store.query.query({
+        events: ['event1', 'event2', 'event3'],
+        group: 'field3',
         select: ['$count']
       });
     },

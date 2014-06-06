@@ -21,7 +21,7 @@
           "indexed": true
         },
         "field3": {
-          "type": "string"
+          "type": "number"
         }
       }
     },
@@ -35,7 +35,7 @@
           "indexed": true
         },
         "field3": {
-          "type": "string"
+          "type": "number"
         }
       }
     },
@@ -49,7 +49,7 @@
           "indexed": true
         },
         "field3": {
-          "type": "string"
+          "type": "number"
         }
       }
     }
