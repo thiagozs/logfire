@@ -9,7 +9,7 @@ describe('TTLService', function () {
 
   before(function () {
     return helpers.initLogfire({
-        ttl_flush_interval: 1
+        flush_interval: 1
       })
       .then(function (l) {
         logfire = l;
@@ -33,7 +33,7 @@ describe('TTLService', function () {
     after(function() {
       logfire.ttlService._flush.restore();
     });
-    it('should flush every `ttl_flush_interval` seconds', function() {
+    it('should flush every `flush_interval` seconds', function() {
       this.timeout(4000);
       return new Promise(function (resolve) {
         setTimeout(function () {
