@@ -38,17 +38,13 @@ Per default, Logfire will try to connect to localhost:6379 without authenticatio
 
 ### Event structure
 
-To be able to create new events, you will have to define your event structure in the logfire.json first. There are event categories and events. Let's define a `cache` category with two events: `hit` and `miss`.
+To be able to create new events, you will have to define your event structure in the logfire.json first. Let's define two events: `cache.hit` and `cache.miss`:
 
 ```json
 {
-  "categories": {
-    "cache": {
-      "events": {
-        "hit": {},
-        "miss": {}
-      }
-    }
+  "events": {
+    "cache.hit": {},
+    "cache.miss": {}
   }
 }
 ```
@@ -57,28 +53,24 @@ Events can also hold additional fields. Let's add some:
 
 ```json
 {
-  "categories": {
-    "cache": {
-      "events": {
-        "hit": {
-          "fields": {
-            "file_name": {
-              "type": "string"
-            },
-            "file_type": {
-              "type": "string"
-            }
-          }
+  "events": {
+    "cache.hit": {
+      "fields": {
+        "file_name": {
+          "type": "string"
         },
-        "miss": {
-          "fields": {
-            "file_name": {
-              "type": "string"
-            },
-            "file_type": {
-              "type": "string"
-            }
-          }
+        "file_type": {
+          "type": "string"
+        }
+      }
+    },
+    "cache.miss": {
+      "fields": {
+        "file_name": {
+          "type": "string"
+        },
+        "file_type": {
+          "type": "string"
         }
       }
     }
@@ -93,9 +85,9 @@ Events can also hold additional fields. Let's add some:
 Logfire provides an HTTP API for creating events. You don't need to do raw HTTP requests, there are [clients](clients.md) for several programming languages and frameworks. I'm just using curl here to demonstrate how the API works:
 
 ```bash
-$ curl -d '{"category": "cache", "event": "hit", "data": { "file_type": "html", "file_name": "foobar.html" }}' -H "Content-Type: application/json" http://localhost:8085/events
+$ curl -d '{"event": "cache.hit", "data": { "file_type": "html", "file_name": "foobar.html" }}' -H "Content-Type: application/json" http://localhost:8085/events
 # Result: {"success":true, "$id": 1}
-$ curl -d '{"category": "cache", "event": "miss", "data": { "file_type": "html", "file_name": "foobar.html" }}' -H "Content-Type: application/json" http://localhost:8085/events
+$ curl -d '{"event": "cache.miss", "data": { "file_type": "html", "file_name": "foobar.html" }}' -H "Content-Type: application/json" http://localhost:8085/events
 # Result: {"success":true, "$id": 2}
 ```
 
