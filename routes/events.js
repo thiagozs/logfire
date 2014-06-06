@@ -8,6 +8,7 @@ module.exports = {
    * @param  {ServerResponse} res
    */
   get: function (logfire, req, res) {
+    logfire.checkAuth(req);
     return Promise.try(logfire.store.events.get, [req.params.id], logfire.store.events)
       .then(function (event) {
         res.json(event);
@@ -22,6 +23,7 @@ module.exports = {
    * @param  {ServerResponse} res
    */
   create: function (logfire, req, res) {
+    logfire.checkAuth(req);
     return Promise.try(logfire.store.events.create, [req.body], logfire.store.events)
       .then(function (id) {
         res.json({ success: true, $id: id });

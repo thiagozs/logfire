@@ -1,7 +1,6 @@
 'use strict';
 require('../lib/autoload');
 
-var fs = require('fs');
 var path = require('path');
 var Logfire = require('lib/logfire');
 

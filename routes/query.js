@@ -9,6 +9,7 @@ module.exports = {
    * @param  {ServerResponse} res
    */
   query: function (logfire, req, res) {
+    logfire.checkAuth(req);
     return Promise.try(logfire.store.query.query, [req.body], logfire.store.query)
       .then(function (response) {
         res.setHeader('Content-Type', 'application/json');
