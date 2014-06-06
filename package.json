@@ -6,7 +6,9 @@
   "scripts": {
     "test": "NODE_ENV=test node_modules/.bin/mocha --require should --reporter spec test/*.test.js test/**/*.test.js",
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | node_modules/.bin/coveralls && rm -rf ./coverage",
-    "coverage": "NODE_ENV=test node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -R spec test/*.test.js test/**/*.test.js"
+    "coverage": "NODE_ENV=test node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -R spec test/*.test.js test/**/*.test.js",
+    "benchmark": "node benchmark/benchmark.js",
+    "benchmark-noseed": "node benchmark/benchmark.js --noseed"
   },
   "bin": {
     "logfire": "./bin/logfire.js"

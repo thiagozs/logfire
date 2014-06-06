@@ -1,0 +1,74 @@
+{
+  "get_all_group_by_event": [
+    {
+      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
+      "average": 1491
+    }
+  ],
+  "count_all_group_by_date_minutes": [
+    {
+      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
+      "average": 885
+    }
+  ],
+  "get_all_group_by_date_minutes": [
+    {
+      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
+      "average": 1492
+    }
+  ],
+  "count_all_group_by_date_days": [
+    {
+      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
+      "average": 894
+    }
+  ],
+  "get_all_group_by_date_days": [
+    {
+      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
+      "average": 1496
+    }
+  ],
+  "count_all_group_by_date_months": [
+    {
+      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
+      "average": 898
+    }
+  ],
+  "get_all_group_by_date_months": [
+    {
+      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
+      "average": 1488
+    }
+  ],
+  "count_all_group_by_indexed_string_field": [
+    {
+      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
+      "average": 857
+    }
+  ],
+  "get_all_group_by_indexed_string_field": [
+    {
+      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
+      "average": 1547
+    }
+  ],
+  "count_all_group_by_unindexed_string_field": [
+    {
+      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
+      "average": 1027
+    }
+  ],
+  "count_all_group_by_event": [
+    {
+      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
+      "average": 145
+    }
+  ],
+  "get_all_group_by_unindexed_string_field": [
+    {
+      "revision": "f1215017397033138ff1376bbbf6bee909c1ab23",
+      "average": 1890
+    }
+  ]
+}

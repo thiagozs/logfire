@@ -1,0 +1,57 @@
+{
+  "port": 8088,
+
+  "redis": {
+    "host": "localhost",
+    "port": 6379,
+    "db": 3,
+    "auth": ""
+  },
+
+  "disable_flush": true,
+
+  "events": {
+    "event1": {
+      "fields": {
+        "field1": {
+          "type": "string"
+        },
+        "field2": {
+          "type": "string",
+          "indexed": true
+        },
+        "field3": {
+          "type": "string"
+        }
+      }
+    },
+    "event2": {
+      "fields": {
+        "field1": {
+          "type": "string"
+        },
+        "field2": {
+          "type": "string",
+          "indexed": true
+        },
+        "field3": {
+          "type": "string"
+        }
+      }
+    },
+    "event3": {
+      "fields": {
+        "field1": {
+          "type": "string"
+        },
+        "field2": {
+          "type": "string",
+          "indexed": true
+        },
+        "field3": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
