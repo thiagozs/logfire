@@ -1,3 +1,10 @@
+## 0.0.3 (Jun 6 2014)
+
+* Add authentication
+* `port` is now configurable via `logfire.json`
+* Minor fix in `LogfireStore#_runLuaScript`
+* Removed categories
+
 ## 0.0.2 (Jun 6 2014)
 
 * Added GET /events/:id
