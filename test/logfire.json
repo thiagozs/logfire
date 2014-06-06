@@ -7,52 +7,43 @@
   },
 
   "ttl_flush_interval": 1,
-
-  "categories": {
-    "video": {
-      "events": {
-        "success": {
-          "fields": {
-            "provider": {
-              "type": "string",
-              "required": true
-            },
-            "video_identifier": {
-              "type": "string"
-            },
-            "server": {
-              "type": "number"
-            }
-          }
+  "events": {
+    "video.success": {
+      "fields": {
+        "provider": {
+          "type": "string",
+          "required": true
         },
-        "error": {
-          "fields": {
-            "code": {
-              "type": "string"
-            },
-            "stack": {
-              "type": "string"
-            },
-            "settings": {
-              "type": "string"
-            },
-            "info": {
-              "type": "string"
-            },
-            "server": {
-              "type": "number"
-            }
-          }
+        "video_identifier": {
+          "type": "string"
+        },
+        "server": {
+          "type": "number"
         }
       }
     },
-    "cache": {
-      "events": {
-        "hit": {
-          "ttl": 600
+    "video.error": {
+      "fields": {
+        "code": {
+          "type": "string"
         },
-        "miss": {}
+        "stack": {
+          "type": "string"
+        },
+        "settings": {
+          "type": "string"
+        },
+        "info": {
+          "type": "string"
+        },
+        "server": {
+          "type": "number"
+        }
       }
-    }
+    },
+    "cache.hit": {
+      "ttl": 600
+    },
+    "cache.miss": {}
   }
 }

@@ -92,18 +92,6 @@ describe('/events', function() {
       });
     });
 
-    describe('when category is unknown', function () {
-      it('should return an error', function (done) {
-        supertest(server)
-          .post('/events')
-          .send({ event: 'foobar.success' })
-          .expect(JSON.stringify({
-            error: 'Category "foobar" does not exist.'
-          }))
-          .expect(400, done);
-      });
-    });
-
     describe('when event is unknown', function () {
       it('should return an error', function (done) {
         supertest(server)
