@@ -8,6 +8,7 @@
     "auth": ""
   },
 
+  "debug": true,
   "flush_interval": 1,
   "events": {
     "video.success": {

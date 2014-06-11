@@ -1,6 +1,10 @@
 'use strict';
 require('../lib/autoload');
 
+// We are logging before `Logfire` initializes the logger
+// Let's initialize it here already.
+global.Log = new (require('lib/utils/log'))('debug');
+
 var path = require('path');
 var Logfire = require('lib/logfire');
 
