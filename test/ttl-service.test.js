@@ -46,7 +46,7 @@ describe('TTLService', function () {
     });
   });
 
-  describe.only('flushing', function() {
+  describe('flushing', function() {
     var now;
     var seed = function(eventName) {
       var tasks = [];
