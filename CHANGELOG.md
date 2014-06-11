@@ -1,3 +1,7 @@
+## 0.0.4 (Jun 11 2014)
+
+* Fix flushing (date calculation was inversed)
+
 ## 0.0.3 (Jun 6 2014)
 
 * Add authentication
