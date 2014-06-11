@@ -46,10 +46,11 @@ describe('TTLService', function () {
     });
   });
 
-  describe('flushing', function() {
+  describe.only('flushing', function() {
+    var now;
     var seed = function(eventName) {
       var tasks = [];
-      var now = Math.round(new Date() / 1000);
+      now = Math.round(new Date() / 1000);
 
       // Create 10 in the futue, 10 in the past
       for(var minute = 0; minute < 20; minute++) {
@@ -78,18 +79,21 @@ describe('TTLService', function () {
         return new Promise(function (resolve, reject) {
           setTimeout(function () {
             var query = {
-              events: ['cache.hit'],
-              select: ['$count']
+              events: ['cache.hit']
             };
             logfire.store.query.query(query)
               .then(function (result) {
-                result.should.equal(10);
-                resolve();
+                result.length.should.equal(10);
+                resolve(result);
               })
               .catch(function (err) {
                 reject(err);
               });
           }, 1100);
+        }).then(function (events) {
+          events.forEach(function (event) {
+            (event.$date >= now).should.be.true;
+          });
         });
       });
 

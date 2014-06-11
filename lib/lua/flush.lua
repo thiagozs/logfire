@@ -7,8 +7,8 @@ local ttl = tonumber(args['ttl'])
 local fieldTypes = utils.decode(args['fieldTypes'])
 
 -- Specify $date range
-local minValue = now - ttl
-local maxValue = '+inf'
+local minValue = '-inf'
+local maxValue = now - ttl
 local zsetKey = prefix .. 'indexes:' .. event .. ':$date'
 
 -- Fetch ids
